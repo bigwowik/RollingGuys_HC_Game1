@@ -13,5 +13,6 @@ namespace CodeBase.Infrastructure.Factory
         void CreateEnemySpawner(Vector3 at);
         GameObject PlayerGameObject { get; set; }
         IMapCreator CreateMapCreator();
+        GameObject CreatePlayerCamera();
     }
 }

@@ -7,24 +7,25 @@ namespace CodeBase.Logic.Player
     public class Hero : MonoBehaviour
     {
 
-        [SerializeField] private float Speed;
+        [SerializeField] private float ForwardSpeed = 1;
+        [SerializeField] private float HorizontalSpeed = 1;
 
         private IInputService _inputService;
 
+        public bool CanMove { get; set; } = false;
+        
         [Inject]
         public void Construct(IInputService inputService)
         {
             _inputService = inputService;
         }
 
-        public void Move(Vector3 newPosition)
-        {
-            transform.position = newPosition;
-        }
+        
 
         private void Update()
         {
-            InputUpdateHandle();
+            if(CanMove)
+                InputUpdateHandle();
         }
 
         private void InputUpdateHandle()
@@ -38,7 +39,7 @@ namespace CodeBase.Logic.Player
 
         public void Move(float velocityX)
         {
-            transform.position += (Vector3.forward * Speed + Vector3.right * velocityX) * Time.deltaTime;
+            transform.position += (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime;
         }
     }
 }

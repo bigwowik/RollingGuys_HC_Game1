@@ -11,6 +11,7 @@
         public const string EnemySpawner = "Prefabs/Enemy/EnemySpawner";
         public const string AudioMixerPath = "AudioMixers/AudioMixer";
         public const string MapCreatorPath = "Prefabs/Map/MapCreator 1";
-        
+        public const string PlayerCameraPath = "Prefabs/Player/PlayerCamera 1";
+
     }
 }

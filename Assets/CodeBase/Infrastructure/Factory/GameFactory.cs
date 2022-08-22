@@ -37,14 +37,23 @@ namespace CodeBase.Infrastructure.Factory
             return _diContainer.InstantiatePrefab(prefab).GetComponent<IMapCreator>();
         }
 
+        public GameObject CreatePlayerCamera()
+        {
+            var prefab = Resources.Load<GameObject>(AssetPaths.PlayerCameraPath);
+            var instance = _diContainer.InstantiatePrefab(prefab);
+            instance.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>().Follow = PlayerGameObject.transform;
+            return instance;
+        }
+
         public GameObject CreateHero(Vector3 at)
         {
             var heroPrefab = Resources.Load<GameObject>(AssetPaths.PlayerPrefabPath);
             PlayerGameObject = _diContainer.InstantiatePrefab(heroPrefab);
             PlayerGameObject.transform.position = at;
 
-            //var heroPresenter = new HeroPresenter();
+            var hero = PlayerGameObject.GetComponentInChildren<Hero>();
 
+            _diContainer.Bind<Hero>().FromInstance(hero);
 
             return PlayerGameObject;
         }

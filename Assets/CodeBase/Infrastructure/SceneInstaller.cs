@@ -56,26 +56,16 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
     private void BindGameStateMachine()
     {
         //states
-        Container
-            .Bind<BootstrapState>()
-            .ToSelf()
-            .AsSingle();
+        Container.Bind<BootstrapState>().AsSingle();
 
-        Container
-            .Bind<LoadDataState>()
-            .ToSelf()
-            .AsSingle();
+        Container.Bind<LoadDataState>().AsSingle();
+
+        Container.Bind<MainMenuState>().AsSingle();
         
-        Container
-            .Bind<GameLoopState>()
-            .ToSelf()
-            .AsSingle();
-        
+        Container.Bind<GameLoopState>().AsSingle();
+
         //state machine
-        Container
-            .Bind<IGameStateMachine>()
-            .To<GameStateMachine>()
-            .AsSingle();
+        Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
     }
     
     private void BindInstallerInterfaces()
@@ -90,7 +80,7 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
     {
         Container
             .Bind<IInputService>()
-            .To<UnityInputService>()
+            .To<MouseInputService>()
             .AsSingle();
     }
 

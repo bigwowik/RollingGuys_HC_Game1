@@ -10,5 +10,21 @@ namespace CodeBase.Infrastructure.Inputs
 
         public float VelocityX => Input.GetAxisRaw("Horizontal");
     }
+    
+    public class MouseInputService : IInputService
+    {
+        
+        public bool isActive => Input.GetMouseButton(0);
+
+        public float VelocityX => Input.GetAxis("Mouse X");
+    }
+    
+    public class TouchInputService : IInputService
+    {
+        
+        public bool isActive => Input.touchCount > 0;
+
+        public float VelocityX => 0;
+    }
 }
     

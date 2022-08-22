@@ -29,7 +29,7 @@ namespace CodeBase.Infrastructure.States
             InitStartMenu();
             
             
-            _gameStateMachine.Enter<GameLoopState>();
+            _gameStateMachine.Enter<MainMenuState>();
         }
 
         private void InitStartMenu()
@@ -40,6 +40,7 @@ namespace CodeBase.Infrastructure.States
         private void InitPlayer()
         {
             var player = _gameFactory.CreateHero(Vector3.zero);
+            var camera = _gameFactory.CreatePlayerCamera();
         }
 
         private void InitMap()
