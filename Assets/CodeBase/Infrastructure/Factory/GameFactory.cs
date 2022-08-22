@@ -3,6 +3,7 @@ using CodeBase.Infrastructure.AssetManagment;
 using CodeBase.Infrastructure.Map;
 using CodeBase.Infrastructure.Services.Randomness;
 using CodeBase.InteractableObjects;
+using CodeBase.Logic.Player;
 using CodeBase.StaticData;
 using UnityEngine;
 using Zenject;
@@ -39,10 +40,12 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject CreateHero(Vector3 at)
         {
             var heroPrefab = Resources.Load<GameObject>(AssetPaths.PlayerPrefabPath);
-            PlayerGameObject = InstantiateObject(heroPrefab, at);
+            PlayerGameObject = _diContainer.InstantiatePrefab(heroPrefab);
+            PlayerGameObject.transform.position = at;
 
-            
-            
+            //var heroPresenter = new HeroPresenter();
+
+
             return PlayerGameObject;
         }
 

@@ -5,6 +5,7 @@ namespace CodeBase.Infrastructure.Inputs
 {
     public interface IInputService : IService
     {
-        Vector3 Axis { get; }
+        bool isActive { get; }
+        float VelocityX { get; }
     }
 }
