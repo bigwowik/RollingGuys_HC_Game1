@@ -1,18 +1,15 @@
-﻿using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
 
 namespace CodeBase.Infrastructure
 {
     public class Game
     {
-        
-        public GameStateMachine StateMachine;
+        public readonly IGameStateMachine GameStateMachine;
 
-        public Game(ICoroutineRunner coroutineRunner, LoadingFader loadingFader)
+
+        public Game(IGameStateMachine gameStateMachine)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadingFader, AllServices.Container);
+            this.GameStateMachine = gameStateMachine;
         }
-
-        
     }
 }

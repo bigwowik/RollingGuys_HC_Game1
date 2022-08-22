@@ -15,7 +15,7 @@ namespace CodeBase.Sounds.SoundPlay
 
         private void Construct()
         {
-            _audioService = AllServices.Container.Single<IAudioService>();
+            //_audioService = AllServices.Container.Single<IAudioService>();
         }
 
         private void Start()

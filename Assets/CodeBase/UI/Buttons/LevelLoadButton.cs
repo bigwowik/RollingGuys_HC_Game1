@@ -13,7 +13,7 @@ namespace CodeBase.UI.Buttons
 
         protected override void Construct()
         {
-            _gameStateMachine = AllServices.Container.Single<IGameStateMachine>();
+            //_gameStateMachine = AllServices.Container.Single<IGameStateMachine>();
         }
         protected override void OnButtonClickHandler()
         {

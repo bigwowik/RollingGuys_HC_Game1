@@ -7,5 +7,6 @@ namespace CodeBase.UI.Factory
         void CreateSomeWindow();
         void CreateUIRoot();
         void CreatePauseMenu();
+        void CreateStartMenu();
     }
 }

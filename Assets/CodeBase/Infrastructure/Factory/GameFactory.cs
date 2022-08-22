@@ -1,26 +1,39 @@
 ﻿
 using CodeBase.Infrastructure.AssetManagment;
+using CodeBase.Infrastructure.Map;
 using CodeBase.Infrastructure.Services.Randomness;
 using CodeBase.InteractableObjects;
 using CodeBase.StaticData;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private readonly IAssets _assets;
-        private readonly IStaticDataService _staticData;
+        //private readonly IAssets _assets;
+        //private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
-        public GameObject Hud { get; private set; }
+        private readonly DiContainer _diContainer;
 
+        //cashed references
+        public GameObject Hud { get; private set; }
         public GameObject PlayerGameObject { get; set; }
 
-        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService)
+
+        public GameFactory(IRandomService randomService, DiContainer diContainer)
         {
-            _assets = assets;
-            _staticData = staticData;
+            //_assets = assets;
+            //_staticData = staticData;
             _randomService = randomService;
+            _diContainer = diContainer;
+        }
+
+        public IMapCreator CreateMapCreator()
+        {
+            var prefab = Resources.Load<GameObject>(AssetPaths.MapCreatorPath);
+
+            return _diContainer.InstantiatePrefab(prefab).GetComponent<IMapCreator>();
         }
 
         public GameObject CreateHero(Vector3 at)

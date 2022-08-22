@@ -1,22 +1,22 @@
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Infrastructure
 {
-    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner //entry point
+    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
-        public LoadingFader FaderPrefab;
-        
         private Game _game;
+
+        [Inject]
+        private void Construct(Game game) => 
+            _game = game;
 
         private void Awake()
         {
-            _game = new Game(this, Instantiate(FaderPrefab));
-            _game.StateMachine.Enter<BootstrapState>();
-            
+            _game.GameStateMachine.Enter<BootstrapState>();
             DontDestroyOnLoad(this);
+            
         }
-        
-        
     }
 }

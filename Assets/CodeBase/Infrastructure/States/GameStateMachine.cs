@@ -1,45 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.Services;
-using CodeBase.StaticData;
-using CodeBase.UI.Factory;
-using CodeBase.UI.Windows;
+using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
     public class GameStateMachine : IGameStateMachine
     {
-        private readonly Dictionary<Type, IExitableState> _states;
+        private readonly DiContainer _container;
         private IExitableState _activeState;
 
-        public GameStateMachine(ISceneLoader sceneLoader, LoadingFader loadingFader, AllServices services)
+        public GameStateMachine(DiContainer container)
         {
-            _states = new Dictionary<Type, IExitableState>()
-            {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this
-                    , sceneLoader, loadingFader, services.Single<IGameFactory>()
-                    , services.Single<IStaticDataService>()
-                    , services.Single<IUIFactory>()),
-                [typeof(GameLoopState)] = new GameLoopState(this, sceneLoader),
-                [typeof(PauseGameState)] = new PauseGameState(
-                    services.Single<IWindowService>(), 
-                    services.Single<IGameFactory>())
-            };
+            _container = container;
         }
-
 
         public void Enter<TState>() where TState : class, IState
         {
             IState state = ChangeState<TState>();
             state.Enter();
         }
-
-        public void Enter<TState, TPayLoad>(TPayLoad payLoad) where TState : class, IPayloadedState<TPayLoad>
+        public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload>
         {
             TState state = ChangeState<TState>();
-            state.Enter(payLoad);
+            state.Enter(payload);
         }
 
         private TState ChangeState<TState>() where TState : class, IExitableState
@@ -50,7 +33,9 @@ namespace CodeBase.Infrastructure.States
             return state;
         }
 
-        private TState GetState<TState>() where TState : class, IExitableState =>
-            _states[typeof(TState)] as TState;
+        private TState GetState<TState>() where TState : class, IExitableState
+        {
+            return _container.Resolve<TState>() as TState;
+        }
     }
 }

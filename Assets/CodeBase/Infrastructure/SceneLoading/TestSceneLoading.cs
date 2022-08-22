@@ -12,7 +12,7 @@ public class TestSceneLoading : MonoBehaviour
 
     private void Construct()
     {
-        _gameStateMachine = AllServices.Container.Single<IGameStateMachine>();
+        //_gameStateMachine = AllServices.Container.Single<IGameStateMachine>();
     }
 
     private void Start()

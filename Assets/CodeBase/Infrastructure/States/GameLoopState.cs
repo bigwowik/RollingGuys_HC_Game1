@@ -1,19 +1,24 @@
-﻿namespace CodeBase.Infrastructure.States
+using CodeBase.Infrastructure.Factory;
+using UnityEngine;
+
+namespace CodeBase.Infrastructure.States
 {
     public class GameLoopState : IState
     {
-        public GameLoopState(GameStateMachine stateMachine, ISceneLoader sceneLoader)
+        private readonly IGameStateMachine _gameStateMachine;
+
+        public GameLoopState(IGameStateMachine gameStateMachine)
         {
+            _gameStateMachine = gameStateMachine;
         }
 
         public void Enter()
         {
-            //Helper.MouseLock(true);
+            Debug.Log("Start game loop");
         }
 
         public void Exit()
         {
-            //Helper.MouseLock(false);
         }
     }
 }

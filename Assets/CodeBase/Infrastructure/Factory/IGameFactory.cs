@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Map;
+using CodeBase.Infrastructure.Services;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factory
@@ -11,5 +12,6 @@ namespace CodeBase.Infrastructure.Factory
         void CreateDialogUI();
         void CreateEnemySpawner(Vector3 at);
         GameObject PlayerGameObject { get; set; }
+        IMapCreator CreateMapCreator();
     }
 }

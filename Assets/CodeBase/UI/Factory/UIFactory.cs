@@ -14,10 +14,10 @@ namespace CodeBase.UI.Factory
 
         private Transform _uiRoot;
 
-        public UIFactory(IAssets assets, IStaticDataService staticData)
+        public UIFactory()
         {
-            _assets = assets;
-            _staticData = staticData;
+            // _assets = assets;
+            // _staticData = staticData;
         }
         public void CreateSomeWindow()
         {
@@ -41,5 +41,9 @@ namespace CodeBase.UI.Factory
             var pauseUi = GameObject.Instantiate(prefab, _uiRoot);
         }
 
+        public void CreateStartMenu()
+        {
+            Debug.Log("Create Start Menu");
+        }
     }
 }

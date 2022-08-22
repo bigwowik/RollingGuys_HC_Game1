@@ -10,7 +10,7 @@ namespace CodeBase.Sounds
 
         public void Construct()
         {
-            _soundService = AllServices.Container.Single<IAudioService>();
+            //_soundService = AllServices.Container.Single<IAudioService>();
         }
 
         void Start()
