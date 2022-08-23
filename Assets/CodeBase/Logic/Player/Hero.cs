@@ -1,4 +1,6 @@
-﻿using CodeBase.Infrastructure.Inputs;
+﻿using System;
+using CodeBase.Infrastructure.Inputs;
+using CodeBase.Logic.Friends;
 using UnityEngine;
 using Zenject;
 
@@ -9,17 +11,24 @@ namespace CodeBase.Logic.Player
 
         [SerializeField] private float ForwardSpeed = 1;
         [SerializeField] private float HorizontalSpeed = 1;
+        private Rigidbody _rigidbody;
 
         private IInputService _inputService;
+        private bool _isInputActive;
+        private float _velocityX;
 
         public bool CanMove { get; set; } = false;
-        
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+
         [Inject]
         public void Construct(IInputService inputService)
         {
             _inputService = inputService;
         }
-
         
 
         private void Update()
@@ -30,16 +39,19 @@ namespace CodeBase.Logic.Player
 
         private void InputUpdateHandle()
         {
-            var velocityX = _inputService.VelocityX;
-            var isInputActive = _inputService.isActive;
+            _velocityX = _inputService.VelocityX;
+            _isInputActive = _inputService.isActive;
+        }
 
-            if (isInputActive)
-                Move(velocityX);
+        private void FixedUpdate()
+        {
+            if (_isInputActive)
+                Move(_velocityX);
         }
 
         public void Move(float velocityX)
         {
-            transform.position += (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime;
+            _rigidbody.MovePosition(transform.position + (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime);
         }
     }
 }

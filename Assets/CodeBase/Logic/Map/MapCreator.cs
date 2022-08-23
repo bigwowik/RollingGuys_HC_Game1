@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using CodeBase.Infrastructure.Factory;
+using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Map
 {
@@ -15,18 +17,21 @@ namespace CodeBase.Logic.Map
         private MapElementsCollection _mapElementsCollectionCollection;
 
         public GameObject[] Elements;
+        private IGameFactory _gameFactory;
 
 
-        public void Construct()
+        [Inject]
+        public void Construct(IGameFactory gameFactory)
         {
+            _gameFactory = gameFactory;
             //from cofings service
 
-            CreateMapElements();
+            
         }
 
         public void CreateMap()
         {
-            Construct();
+            CreateMapElements();
             
             _map = GetComponent<IMapProvider>().GetMap();
 
@@ -42,15 +47,15 @@ namespace CodeBase.Logic.Map
                         if(prefab == null) continue;
                         var offset = -Vector3.right * 0.5f * Step * (Width - 1);
                         var newPosition = new Vector3(j * Step, 0, i * Step) + offset;
-                        SpawnOneElement(newPosition, prefab);
+                        SpawnOneElement(prefab, newPosition);
                     }
                 }
             }
         }
 
-        private void SpawnOneElement(Vector3 position, GameObject prefab)
+        private void SpawnOneElement(GameObject prefab, Vector3 position)
         {
-            Instantiate(prefab, position, Quaternion.identity);
+            _gameFactory.InstantiateThroughDi(prefab, position);
         }
 
         private void CreateMapElements()

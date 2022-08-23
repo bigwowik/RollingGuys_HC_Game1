@@ -15,5 +15,6 @@ namespace CodeBase.Infrastructure.Factory
         GameObject PlayerGameObject { get; set; }
         IMapCreator CreateMapCreator();
         GameObject CreatePlayerCamera();
+        GameObject InstantiateThroughDi(GameObject prefab, Vector3 at);
     }
 }

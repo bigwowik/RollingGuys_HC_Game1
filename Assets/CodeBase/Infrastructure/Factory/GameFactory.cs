@@ -95,5 +95,13 @@ namespace CodeBase.Infrastructure.Factory
             return InstantiateObject(prefab, Vector3.zero);
         }
         
+        public GameObject InstantiateThroughDi(GameObject prefab, Vector3 at)
+        {
+            var instance = _diContainer.InstantiatePrefab(prefab);
+            instance.transform.position = at;
+            
+            return instance;
+        }
+        
     }
 }
