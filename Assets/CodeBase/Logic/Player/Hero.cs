@@ -51,7 +51,7 @@ namespace CodeBase.Logic.Player
 
         public void Move(float velocityX)
         {
-            _rigidbody.MovePosition(transform.position + (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime);
+            _rigidbody.MovePosition(_rigidbody.position + (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime);
         }
     }
 }

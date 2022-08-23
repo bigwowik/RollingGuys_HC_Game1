@@ -8,6 +8,7 @@ namespace CodeBase.Logic.Friends
         IFriend NextFriend { get; set; }
         IFriend BackFriend { get; set; }
         IFriend GetLastFriend { get; }
-        void AddBackFriend(IFriend friend);
+        void AddFriend(IFriend friend);
+        void RemoveMe();
     }
 }

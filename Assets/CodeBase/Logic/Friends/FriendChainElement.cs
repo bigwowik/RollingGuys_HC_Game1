@@ -19,11 +19,48 @@ namespace CodeBase.Logic.Friends
             }
         }
 
-        public void AddBackFriend(IFriend friend)
+        public void AddFriend(IFriend friend)
         {
-            var lastFriend = GetLastFriend;
-            lastFriend.BackFriend = friend;
-            friend.NextFriend = lastFriend;
+            if (BackFriend != null)
+                BackFriend.NextFriend = friend;
+
+
+            friend.NextFriend = this;
+            friend.BackFriend = BackFriend;
+            
+            BackFriend = friend;
+            
+            // var lastFriend = GetLastFriend;
+            // lastFriend.BackFriend = friend;
+            // friend.NextFriend = lastFriend;
+        }
+
+        public void RemoveMe()
+        {
+            if (NextFriend == null)//if first element
+            {
+                if (BackFriend != null)
+                {
+                    GetComponent<Rigidbody>().position = BackFriend.Position;
+                    BackFriend.RemoveMe();
+
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                //if not first element
+                if(BackFriend != null)
+                    NextFriend.BackFriend = BackFriend;
+                
+                BackFriend.NextFriend = NextFriend;
+                Destroy(gameObject);
+            }
+
+
         }
     }
 }

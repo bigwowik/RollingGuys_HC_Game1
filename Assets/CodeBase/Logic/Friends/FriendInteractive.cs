@@ -4,23 +4,14 @@ using UnityEngine;
 
 namespace CodeBase.Logic.Friends
 {
-    public class FriendInteractive : MonoBehaviour
+    public class FriendInteractive : TriggerInteractiveBase<IFriend>
     {
-        private bool _wasActivated = false;
-        
         public FriendMovement FriendMovement;
-        private void OnCollisionEnter(Collision collision)
+
+        protected override void OnTriggerAction(GameObject triggerObject)
         {
-            Debug.Log("Collision- "+collision.collider);
-            if(collision.collider.gameObject.TryGetComponent<Hero>(out var hero))
-            {
-                if(_wasActivated) return;
-                
-                
-                FriendMovement.enabled = true;
-                hero.GetComponent<IFriend>().AddBackFriend(GetComponent<IFriend>());
-                _wasActivated = true;
-            }
+            FriendMovement.enabled = true;
+            triggerObject.GetComponent<IFriend>().AddFriend(GetComponent<IFriend>());
         }
     }
 }
