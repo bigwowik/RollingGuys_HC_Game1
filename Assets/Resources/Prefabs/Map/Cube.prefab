@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8503057513639855429
+--- !u!1 &1418698824607260289
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 753024141586337784}
-  - component: {fileID: 7175244167099905495}
-  - component: {fileID: 6698642419689684067}
-  - component: {fileID: 5886100048547473249}
-  - component: {fileID: 1224578029}
-  - component: {fileID: 1224578028}
+  - component: {fileID: 4563741288610108226}
+  - component: {fileID: 2349003949689440993}
+  - component: {fileID: 2245352557503213925}
+  - component: {fileID: 6609073760056955269}
   m_Layer: 0
-  m_Name: MapCreator 1
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &753024141586337784
+--- !u!4 &4563741288610108226
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503057513639855429}
+  m_GameObject: {fileID: 1418698824607260289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 5, z: 5}
+  m_LocalPosition: {x: 348.72864, y: 1548.1936, z: -9.65759}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7175244167099905495
+--- !u!33 &2349003949689440993
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503057513639855429}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6698642419689684067
+  m_GameObject: {fileID: 1418698824607260289}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2245352557503213925
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503057513639855429}
+  m_GameObject: {fileID: 1418698824607260289}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,66 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5886100048547473249
-MeshCollider:
+--- !u!65 &6609073760056955269
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503057513639855429}
+  m_GameObject: {fileID: 1418698824607260289}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1224578029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503057513639855429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ddf390bfcb7420999101c23fad8e99b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Step: 2
-  Width: 5
-  Elements:
-  - {fileID: 1418698824607260289, guid: 41a3461fb6dfbda49894acbbabf6ba3e, type: 3}
-  - {fileID: 5566454453410383622, guid: 0a54faf71f6f1d54bbb5152aeba08dbd, type: 3}
---- !u!114 &1224578028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503057513639855429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4737054fcf4f3f9fd175dd0c4e705b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MapString: '0 1 0 1 0
-
-    2 2 2 2 2
-
-    0 0 1 0 2
-
-    1 0 0 0 2
-
-    1 2 0 1
-    2
-
-    0 1 0 1 0
-
-    2 2 2 2 2
-
-    0 0 1 0 2
-
-    1 0 0 0 2
-
-    1 2 0 1 2'
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

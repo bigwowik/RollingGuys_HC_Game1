@@ -1,10 +1,8 @@
 ﻿
 using CodeBase.Infrastructure.AssetManagment;
-using CodeBase.Infrastructure.Map;
 using CodeBase.Infrastructure.Services.Randomness;
-using CodeBase.InteractableObjects;
+using CodeBase.Logic.Map;
 using CodeBase.Logic.Player;
-using CodeBase.StaticData;
 using UnityEngine;
 using Zenject;
 

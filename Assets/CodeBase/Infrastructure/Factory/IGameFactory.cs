@@ -1,5 +1,6 @@
-﻿using CodeBase.Infrastructure.Map;
+﻿
 using CodeBase.Infrastructure.Services;
+using CodeBase.Logic.Map;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factory
