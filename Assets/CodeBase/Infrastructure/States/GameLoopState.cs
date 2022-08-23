@@ -1,5 +1,7 @@
 using CodeBase.Infrastructure.Factory;
+using CodeBase.Logic.Map;
 using CodeBase.Logic.Player;
+using CodeBase.UI.Hud;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -8,43 +10,27 @@ namespace CodeBase.Infrastructure.States
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly Hero _hero;
+        private readonly IMapCreator _mapCreator;
+        private readonly LevelProgress _levelProgress;
 
-        public GameLoopState(IGameStateMachine gameStateMachine, Hero hero)
+        public GameLoopState(IGameStateMachine gameStateMachine, Hero hero, IMapCreator mapCreator, LevelProgress levelProgress)
         {
             _gameStateMachine = gameStateMachine;
             _hero = hero;
+            _mapCreator = mapCreator;
+            _levelProgress = levelProgress;
         }
 
         public void Enter()
         {
             Debug.Log("Start game loop");
             _hero.CanMove = true;
+            _levelProgress.StartLevelProgress(_hero,_mapCreator );
+            
         }
 
         public void Exit()
         {
-        }
-    }
-    
-    public class MainMenuState : IState
-    {
-        private readonly IGameStateMachine _gameStateMachine;
-        private readonly IMediator _mediator;
-
-        public MainMenuState(IGameStateMachine gameStateMachine, IMediator mediator)
-        {
-            _gameStateMachine = gameStateMachine;
-            _mediator = mediator;
-        }
-
-        public void Enter()
-        {
-            Debug.Log("MainMenuState");
-        }
-
-        public void Exit()
-        {
-            _mediator.DisableMainMenu();
         }
     }
 }

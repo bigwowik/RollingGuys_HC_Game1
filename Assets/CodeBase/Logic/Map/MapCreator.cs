@@ -7,10 +7,12 @@ namespace CodeBase.Logic.Map
     public interface IMapCreator
     {
         void CreateMap();
+        float MapEndPosition { get; }
     }
 
     public class MapCreator : MonoBehaviour, IMapCreator
     {
+        private const string ElementKey = "End";
         [SerializeField] private float Step;
         [SerializeField] private float Width = 5;
         private Map _map;
@@ -19,6 +21,10 @@ namespace CodeBase.Logic.Map
 
         public GameObject[] Elements;
         private IGameFactory _gameFactory;
+
+        private float _lastZElementPosition;
+
+        public float MapEndPosition { get; private set; }
 
 
         [Inject]
@@ -46,10 +52,21 @@ namespace CodeBase.Logic.Map
                         if(prefab == null) continue;
                         var offset = -Vector3.right * 0.5f * Step * (Width - 1);
                         var newPosition = new Vector3(j * Step, 0, i * Step) + offset;
+                        _lastZElementPosition = newPosition.z;
                         SpawnOneElement(prefab, newPosition);
                     }
                 }
             }
+
+            MapEndPosition = _lastZElementPosition + Step;
+            SpawnEndOfMap(MapEndPosition);
+        }
+
+        private void SpawnEndOfMap(float mapEndPosition)
+        {
+            var pos = new Vector3(0, 0, mapEndPosition);
+            var prefab = MapElementsCollection.GetMapElement(ElementKey);
+            SpawnOneElement(prefab, pos);
         }
 
         private void SpawnOneElement(GameObject prefab, Vector3 position)

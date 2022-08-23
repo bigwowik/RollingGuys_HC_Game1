@@ -32,7 +32,11 @@ namespace CodeBase.Infrastructure.Factory
         {
             var prefab = Resources.Load<GameObject>(AssetPaths.MapCreatorPath);
 
-            return _diContainer.InstantiatePrefab(prefab).GetComponent<IMapCreator>();
+            var instance = _diContainer.InstantiatePrefab(prefab).GetComponent<MapCreator>();
+
+            _diContainer.Bind<IMapCreator>().FromInstance(instance);
+            
+            return (IMapCreator)instance;
         }
 
         public GameObject CreatePlayerCamera()

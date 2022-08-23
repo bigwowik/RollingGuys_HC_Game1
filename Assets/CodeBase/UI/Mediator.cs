@@ -10,8 +10,10 @@ using Color = System.Drawing.Color;
 public class Mediator : MonoBehaviour, IMediator
 {
     [SerializeField] private Transform MainMenuButtons;
+    [SerializeField] private Transform LevelProgressButton;
 
-    [Button()] public void DisableMainMenu() => MainMenuButtons.gameObject.SetActive(false);
+    [Button()] public void DisableMainMenu() => MainMenuButtons.gameObject.SetActive(false); 
+    [Button()] public void EnableLevelProgressBar() => LevelProgressButton.gameObject.SetActive(true); 
 }
 
 public interface IMediator
