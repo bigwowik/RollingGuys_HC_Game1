@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7146192397001686816}
   - component: {fileID: 1733463995791565893}
   - component: {fileID: 3505157031771392781}
-  - component: {fileID: 7516447020320900420}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 263211916017978857}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3145696886756022300}
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7516447020320900420
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263211916017978857}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7847487040895605341
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +98,7 @@ GameObject:
   - component: {fileID: 8061009523191595026}
   - component: {fileID: -6390715207239882507}
   m_Layer: 0
-  m_Name: Friend 1
+  m_Name: 1 Friend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,7 +131,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.4, y: 1, z: 0.4}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &6780700051732242576
 MonoBehaviour:
@@ -159,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538d9fde35834037a362cd5e1dfd84d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CriticalDistance: 1
-  Speed: 2
+  CriticalDistance: 0.25
+  Speed: 4
   LastNextFriendPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &5511702891771199888
 MonoBehaviour:

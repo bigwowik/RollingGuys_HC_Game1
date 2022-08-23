@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using CodeBase.Infrastructure;
 using UnityEngine;
 
 namespace CodeBase.Logic.Map
 {
-    public class MapElementsCollection
+    [CreateAssetMenu(fileName = "MapElementsCollection", menuName = "Configs/MapElementsCollection", order = 1)]
+    public class MapElementsCollection : ScriptableObject
     {
-        private Dictionary<string, GameObject> Elements = new Dictionary<string, GameObject>();
+
+        public List<MapElement> Elements = new List<MapElement>();
 
         
-        public void AddMapElement(string elementKey, GameObject element) => 
-            Elements[elementKey] = element;
 
         public GameObject GetMapElement(string elementKey)
         {
-            if(Elements.TryGetValue(elementKey, out var element))
-                return element;
+            var element = Elements.Find(z => z.Key == elementKey);
+
+            if (element != null)
+                return element.Prefab;
             else
             {
                 Debug.LogError($"Map element with key: {elementKey} has not found");

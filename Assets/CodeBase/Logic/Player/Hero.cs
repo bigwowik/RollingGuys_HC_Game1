@@ -9,7 +9,7 @@ namespace CodeBase.Logic.Player
     public class Hero : MonoBehaviour
     {
 
-        [SerializeField] private float ForwardSpeed = 1;
+        [SerializeField] private float ForwardSpeed = 1; // TODO Depends of friends count
         [SerializeField] private float HorizontalSpeed = 1;
         private Rigidbody _rigidbody;
 
