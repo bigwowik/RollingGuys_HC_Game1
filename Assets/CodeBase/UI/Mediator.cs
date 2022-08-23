@@ -9,21 +9,9 @@ using Color = System.Drawing.Color;
 
 public class Mediator : MonoBehaviour, IMediator
 {
-    [Inject] private IGameStateMachine GameStateMachine;
-
     [SerializeField] private Transform MainMenuButtons;
 
-    //[Button] public void StartRunMode() => GameStateMachine.Enter<GameLoopState>();
-
-    [Button()] public void DisableMainMenu()
-    {
-        //MainMenuButtons.gameObject.SetActive(false);
-    }
-    
-    [Button()] public void DisableMainMenu2()
-    {
-        //MainMenuButtons.gameObject.SetActive(false);
-    }
+    [Button()] public void DisableMainMenu() => MainMenuButtons.gameObject.SetActive(false);
 }
 
 public interface IMediator
