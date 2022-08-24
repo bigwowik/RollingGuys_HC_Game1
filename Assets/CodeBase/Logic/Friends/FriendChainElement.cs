@@ -53,10 +53,12 @@ namespace CodeBase.Logic.Friends
             else
             {
                 //if not first element
-                if(BackFriend != null)
+
+                if (BackFriend != null)
+                {
                     NextFriend.BackFriend = BackFriend;
-                
-                BackFriend.NextFriend = NextFriend;
+                    BackFriend.NextFriend = NextFriend;
+                }
                 Destroy(gameObject);
             }
 

@@ -16,6 +16,9 @@ MonoBehaviour:
   - Key: End
     Prefab: {fileID: 5566454453410383622, guid: 1106ab965b444d64481a379becf8c2d4,
       type: 3}
+  - Key: Floor
+    Prefab: {fileID: 6691576503384744992, guid: 3dc56ca7c1dd6194e9e46ea8795e56d7,
+      type: 3}
   - Key: 1
     Prefab: {fileID: 7847487040895605341, guid: 641be69652945844699560f139917286,
       type: 3}

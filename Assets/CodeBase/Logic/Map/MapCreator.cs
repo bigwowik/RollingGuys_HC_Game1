@@ -4,34 +4,33 @@ using Zenject;
 
 namespace CodeBase.Logic.Map
 {
-    public interface IMapCreator
-    {
-        void CreateMap();
-        float MapEndPosition { get; }
-    }
-
     public class MapCreator : MonoBehaviour, IMapCreator
     {
         private const string ElementKey = "End";
+        private const string FloorKey = "Floor";
+
+        [Header("Grid")]
         [SerializeField] private float Step;
         [SerializeField] private float Width = 5;
-        private Map _map;
-        
+        [Header("Floor")]
+        [SerializeField] private float FloorLength = 5;
+        [SerializeField]private float StartFloorPosition = -10f;
+        [Header("Elements")]
         [SerializeField] private MapElementsCollection MapElementsCollection;
 
-        public GameObject[] Elements;
-        private IGameFactory _gameFactory;
-
-        private float _lastZElementPosition;
 
         public float MapEndPosition { get; private set; }
-
+        
+        private IGameFactory _gameFactory;        
+        private Map _map;
+        private float _lastElementPositionZ;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
-            //from cofings service
+            
+            //TODO from cofings service
 
             
         }
@@ -41,6 +40,29 @@ namespace CodeBase.Logic.Map
             _map = GetComponent<IMapProvider>().GetMap();
 
 
+            ParseMapDataAndSpawn();
+
+
+            MapEndPosition = _lastElementPositionZ + Step;
+            SpawnEndOfMap(MapEndPosition);
+            
+            CreateFloorOfMap();
+            
+        }
+
+        private void CreateFloorOfMap()
+        {
+            var prefab = MapElementsCollection.GetMapElement(FloorKey);
+            
+            for (float dist = StartFloorPosition; dist <= MapEndPosition; dist += FloorLength)
+            {
+                var pos = new Vector3(0, 0, dist);
+                SpawnOneElement(prefab, pos);
+            }
+        }
+
+        private void ParseMapDataAndSpawn()
+        {
             for (var i = 0; i < _map.MapList.Count; i++)
             {
                 for (var j = 0; j < _map.MapList[i].Length; j++)
@@ -49,17 +71,17 @@ namespace CodeBase.Logic.Map
                     if (mapElementKey != "")
                     {
                         var prefab = MapElementsCollection.GetMapElement(mapElementKey);
-                        if(prefab == null) continue;
+                        if (prefab == null) continue;
+                        
                         var offset = -Vector3.right * 0.5f * Step * (Width - 1);
                         var newPosition = new Vector3(j * Step, 0, i * Step) + offset;
-                        _lastZElementPosition = newPosition.z;
+                        _lastElementPositionZ = newPosition.z;
                         SpawnOneElement(prefab, newPosition);
                     }
                 }
             }
-
-            MapEndPosition = _lastZElementPosition + Step;
-            SpawnEndOfMap(MapEndPosition);
+            
+            
         }
 
         private void SpawnEndOfMap(float mapEndPosition)

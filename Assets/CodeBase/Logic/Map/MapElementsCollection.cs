@@ -21,7 +21,7 @@ namespace CodeBase.Logic.Map
                 return element.Prefab;
             else
             {
-                Debug.LogError($"Map element with key: {elementKey} has not found");
+                Debug.LogWarning($"Map element with key: {elementKey} has not found");
                 return null;
             }
         }
