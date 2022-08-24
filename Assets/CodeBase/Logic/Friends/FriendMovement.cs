@@ -13,8 +13,10 @@ namespace CodeBase.Logic.Friends
         
         public float CriticalDistance = 1f;
         public float Speed = 1f;
-        public Vector3 LastNextFriendPosition;
 
+        
+        private Vector3 _lastNextFriendPosition;
+        
         private IInputService _inputService;
         private Rigidbody _rigidbody;
 
@@ -30,28 +32,19 @@ namespace CodeBase.Logic.Friends
             _friend = GetComponent<IFriend>();
             _rigidbody = GetComponent<Rigidbody>();
         }
-
-        private void OnEnable()
-        {
-            _rigidbody.isKinematic = true;
-        }
-
-
-        private void Update()
-        {
-            if(!_inputService.isActive) return;
-
-            if (Vector3.Distance(_friend.NextFriend.Position, transform.position) > CriticalDistance)
-            {
-                LastNextFriendPosition = _friend.NextFriend.Position;
-            }
-            
-        }
-
         private void FixedUpdate()
         {
             if(!_inputService.isActive) return;
-            _rigidbody.position = Vector3.Lerp(transform.position, LastNextFriendPosition, Speed * Time.deltaTime);
+            
+            //Debug.Log(name + " t.pos: " + transform.position + " rb pos: " + _rigidbody.position);
+            Debug.Log(name + " pos delta: " + (transform.position -_rigidbody.position));
+            
+            if (Vector3.Distance(_friend.NextFriend.Position, _rigidbody.position) > CriticalDistance)
+            {
+                _lastNextFriendPosition = _friend.NextFriend.Position;
+            }
+            
+            _rigidbody.position = Vector3.Lerp(_rigidbody.position, _lastNextFriendPosition, Speed * Time.fixedDeltaTime);
         }
     }
 }

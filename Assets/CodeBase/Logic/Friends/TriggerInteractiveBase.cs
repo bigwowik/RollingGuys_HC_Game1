@@ -1,22 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
 
 namespace CodeBase.Logic.Friends
 {
     public abstract class TriggerInteractiveBase<T> : MonoBehaviour
     {
-        private bool _wasActivated = false;
-
-        private void OnTriggerEnter(Collider other)
+        private void Start()
         {
-            if (other.gameObject.TryGetComponent<T>(out var component))
-            {
-                if (_wasActivated) return;
-                _wasActivated = true;
-                
-                OnTriggerAction(other.gameObject);
-            }
+            this.OnTriggerEnterAsObservable()
+                .Where(c => c.TryGetComponent<T>(out var friend))
+                .Take(1)
+                .Subscribe(c => OnTriggerAction(c.gameObject));
         }
-        
         protected abstract void OnTriggerAction(GameObject triggerObject);
     }
 }
