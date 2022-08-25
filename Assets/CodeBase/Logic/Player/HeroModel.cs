@@ -1,20 +1,41 @@
 ﻿using System;
+using CodeBase.Infrastructure.Inputs;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Player
 {
-    public class HeroModel : IHeroModel
+    public class HeroModel
     {
-        public event Action<Vector3> UpdatePosition;
+        public ReactiveProperty<Vector3> Position { get; private set; }
         
-        public Vector3 Position = Vector3.zero;
-        public float Speed = 1f;
+        private readonly HeroConfig _heroConfig;
+        private readonly IInputService _inputService;
 
-
-        public void Move(float velocityX)
+        public HeroModel(HeroConfig heroConfig, IInputService inputService)
         {
-            Position += Vector3.forward * velocityX * Speed * Time.deltaTime;
-            UpdatePosition?.Invoke(Position);
+            _heroConfig = heroConfig;
+            _inputService = inputService;
+
+            Position = new ReactiveProperty<Vector3>();
         }
+        
+        public void FixedUpdateHandle()
+        {
+            if (_inputService.isActive)
+            {
+                Position.Value += 
+                    (Vector3.forward * _heroConfig.ForwardSpeed 
+                    + Vector3.right * _heroConfig.HorizontalSpeed * _inputService.VelocityX)
+                    * Time.fixedDeltaTime;
+            }
+                
+                
+        }
+        
+
+        
     }
 }

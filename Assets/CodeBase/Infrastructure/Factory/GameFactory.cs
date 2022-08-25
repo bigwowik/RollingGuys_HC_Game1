@@ -50,12 +50,23 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject CreateHero(Vector3 at)
         {
             var heroPrefab = Resources.Load<GameObject>(AssetPaths.PlayerPrefabPath);
+            
+            var heroConfig = Resources.Load<HeroConfig>("Configs/HeroConfig");
+            _diContainer.Bind<HeroConfig>().FromInstance(heroConfig);
+            
+            
             PlayerGameObject = _diContainer.InstantiatePrefab(heroPrefab);
             PlayerGameObject.transform.position = at;
 
-            var hero = PlayerGameObject.GetComponentInChildren<Hero>();
+            
+            var heroView = PlayerGameObject.GetComponentInChildren<HeroView>();
+            _diContainer.Bind<HeroView>().FromInstance(heroView);
 
-            _diContainer.Bind<Hero>().FromInstance(hero);
+            
+            _diContainer.Bind<HeroModel>().AsSingle();
+            
+            _diContainer.Bind<HeroPresenter>().AsSingle().NonLazy();
+
 
             return PlayerGameObject;
         }

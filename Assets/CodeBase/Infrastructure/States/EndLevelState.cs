@@ -61,6 +61,7 @@ namespace CodeBase.Infrastructure.States
             switch (payload)
             {
                 case EndLevelType.WIN:
+                    Debug.Log("WIN");
                     _progressService.IncreaseLevelValue();
                     break;
                 case EndLevelType.FAIL:

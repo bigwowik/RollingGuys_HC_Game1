@@ -1,36 +1,33 @@
 ﻿using CodeBase.Infrastructure.Inputs;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace CodeBase.Logic.Player
 {
     public class HeroPresenter
     {
-        private IHeroModel _heroModel;
-        private IHeroView _heroView;
-        private readonly IInputService _inputService;
+        private readonly HeroView _heroView;
+        private readonly HeroModel _heroModel;
 
-        public HeroPresenter(IHeroModel heroModel, IHeroView heroView, IInputService inputService)
+        public HeroPresenter(HeroView heroView, HeroModel heroModel)
         {
-            _heroModel = heroModel;
             _heroView = heroView;
-            _inputService = inputService;
+            _heroModel = heroModel;
 
-            _heroView.InputUpdateEvent += InputUpdateHandle;
-            _heroModel.UpdatePosition += UpdatePosition;
-
+            Start();
         }
 
-        private void InputUpdateHandle()
+        void Start()
         {
-            var velocityX = _inputService.VelocityX;
-            var isInputActive = _inputService.isActive;
+            _heroView.FixedUpdateAsObservable()
+                .Subscribe(_ => _heroModel.FixedUpdateHandle());
 
-            _heroModel.Move(velocityX);
-        }
-
-        void UpdatePosition(Vector3 newPosition)
-        {
-            _heroView.Move(newPosition);
+            _heroModel
+                .Position
+                .ObserveEveryValueChanged(z => z.Value)
+                .Subscribe(pos => _heroView.Move(pos));
+     
         }
         
     }

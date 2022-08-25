@@ -26,7 +26,8 @@ namespace CodeBase.Infrastructure.Services.Progress
 
         public void IncreaseLevelValue()
         {
-            ProgressData.LevelCurrent++;
+            
+           // ProgressData.LevelCurrent++;
         }
     }
 }

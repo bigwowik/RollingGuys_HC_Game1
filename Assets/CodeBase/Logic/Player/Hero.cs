@@ -17,6 +17,7 @@ namespace CodeBase.Logic.Player
         private bool _isInputActive;
         private float _velocityX;
 
+
         public bool CanMove { get; set; } = false;
 
         private void Awake()
@@ -46,12 +47,15 @@ namespace CodeBase.Logic.Player
         private void FixedUpdate()
         {
             if (_isInputActive)
-                Move(_velocityX);
+                Move(_velocityX, _rigidbody);
         }
 
-        public void Move(float velocityX)
+        public void Move(float velocityX, Rigidbody rigidbody)
         {
-            _rigidbody.MovePosition(_rigidbody.position + (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime);
+            rigidbody.MovePosition(rigidbody.position + (Vector3.forward * ForwardSpeed + Vector3.right * velocityX * HorizontalSpeed) * Time.deltaTime);
         }
     }
+    
+    
+    
 }

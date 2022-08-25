@@ -23,10 +23,10 @@ namespace CodeBase.UI.Hud
             
         }
 
-        public void StartLevelProgress(Hero hero, IMapCreator mapCreator)
+        public void StartLevelProgress(Transform heroTransform, IMapCreator mapCreator)
         {
             _mapCreator = mapCreator;
-            _heroTransform = hero.transform;
+            _heroTransform = heroTransform;
             ProgressFillImage.gameObject.SetActive(true);
         }
         

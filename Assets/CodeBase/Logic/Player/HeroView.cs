@@ -1,22 +1,20 @@
 ﻿using System;
+using CodeBase.Infrastructure.Inputs;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Player
 {
-    public class HeroView : MonoBehaviour, IHeroView
+    public class HeroView : MonoBehaviour
     {
-        public event Action InputUpdateEvent;
+        private Rigidbody _rigidbody;
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
         public void Move(Vector3 newPosition)
         {
-            transform.position = newPosition;
+            _rigidbody.MovePosition(newPosition);
         }
-
-        private void Update()
-        {
-            InputUpdateEvent?.Invoke();
-            
-        }
-
-        
     }
 }
