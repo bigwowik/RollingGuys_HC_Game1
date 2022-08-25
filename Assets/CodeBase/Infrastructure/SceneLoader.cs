@@ -20,13 +20,13 @@ namespace CodeBase.Infrastructure
         {
             Debug.Log($"[SceneLoader] Start Load Scene: {nextScene}");
             
-            if (SceneManager.GetActiveScene().name == nextScene)
-            {
-                Debug.Log($"[SceneLoader] Try to start Scene that is nextScene: {nextScene}");
-                onLoaded?.Invoke();
-                yield break;
-                
-            }
+            // if (SceneManager.GetActiveScene().name == nextScene)
+            // {
+            //     Debug.Log($"[SceneLoader] Try to start Scene that is nextScene: {nextScene}");
+            //     onLoaded?.Invoke();
+            //     yield break;
+            //     
+            // }
             
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
 

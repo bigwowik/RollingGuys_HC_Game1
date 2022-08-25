@@ -7,6 +7,7 @@ namespace CodeBase.Infrastructure.Services.Progress
         public ProgressData ProgressData {get;}
         ProgressData LoadData();
         void EndLevel(bool withSuccess);
+        void IncreaseLevelValue();
     }
 
     class ProgressService : IProgressService
@@ -21,6 +22,11 @@ namespace CodeBase.Infrastructure.Services.Progress
         public void EndLevel(bool withSuccess)
         {
             //throw new System.NotImplementedException();
+        }
+
+        public void IncreaseLevelValue()
+        {
+            ProgressData.LevelCurrent++;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using CodeBase.Infrastructure.AssetManagment;
+using CodeBase.Infrastructure.States;
 using CodeBase.StaticData;
+using CodeBase.UI.Windows.EndLevelWindow;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.UI.Factory
 {
@@ -8,16 +11,18 @@ namespace CodeBase.UI.Factory
     {
         private const string UIRootPath = "UI/UIRoot";
         private const string PauseMenuUIPath = "UI/Pause/Pause UI";
+        private const string EndLevelWindowPath = "UI/Windows/EndLevelWindowView";
+
 
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
 
-        private Transform _uiRoot;
+        private readonly Transform _uiRoot;
 
-        public UIFactory()
+        //[Inject(Id = "UIRoot")]
+        public UIFactory(RectTransform uiRoot)
         {
-            // _assets = assets;
-            // _staticData = staticData;
+            _uiRoot = (Transform) uiRoot;
         }
         public void CreateSomeWindow()
         {
@@ -30,9 +35,9 @@ namespace CodeBase.UI.Factory
 
         public void CreateUIRoot()
         {
-            var rootPrefab = Resources.Load<GameObject>(UIRootPath);
-            GameObject uiRoot = GameObject.Instantiate(rootPrefab);
-            _uiRoot = uiRoot.transform;
+            // var rootPrefab = Resources.Load<GameObject>(UIRootPath);
+            // GameObject uiRoot = GameObject.Instantiate(rootPrefab);
+            // _uiRoot = uiRoot.transform;
         }
 
         public void CreatePauseMenu()
@@ -45,5 +50,18 @@ namespace CodeBase.UI.Factory
         {
             Debug.Log("Create Start Menu");
         }
+
+        public EndLevelWindowPresenter CreateEndLevelWindow(EndLevelType endLevelType)
+        {
+            var prefab = Resources.Load<EndLevelWindowView>(EndLevelWindowPath);
+            
+            var view = GameObject.Instantiate(prefab, _uiRoot);
+
+            EndLevelWindowModel windowModel = new EndLevelWindowModel();
+            EndLevelWindowPresenter windowPresenter = new EndLevelWindowPresenter(view, windowModel);
+
+            return windowPresenter;
+        }
+
     }
 }

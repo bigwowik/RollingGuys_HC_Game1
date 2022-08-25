@@ -59,10 +59,16 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         Container.Bind<BootstrapState>().AsSingle();
 
         Container.Bind<LoadDataState>().AsSingle();
+        
+        Container.Bind<LoadLevelState>().AsSingle();
 
         Container.Bind<MainMenuState>().AsSingle();
         
         Container.Bind<GameLoopState>().AsSingle();
+        
+        Container.Bind<EndLevelState>().AsSingle();
+        
+        
 
         //state machine
         Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();

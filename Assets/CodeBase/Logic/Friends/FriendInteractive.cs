@@ -1,8 +1,4 @@
-﻿using System;
-using CodeBase.Logic.Player;
-using UniRx;
-using UniRx.Triggers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Logic.Friends
 {
@@ -15,7 +11,6 @@ namespace CodeBase.Logic.Friends
         private void Awake()
         {
             _friend = GetComponent<IFriend>();
-
         }
 
         protected override void OnTriggerAction(GameObject triggerObject)

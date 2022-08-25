@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UniRx;
+using UniRx.Triggers;
+using UnityEditor;
 using UnityEngine;
 
 public class UISymbolAnimation : MonoBehaviour
@@ -10,6 +13,8 @@ public class UISymbolAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        Debug.Log("start UISymbolAnimation");
         transform.rotation= Quaternion.Euler(0, 0, -_angle);
         
         var endRot = new Vector3(0, 0, _angle);
@@ -18,6 +23,12 @@ public class UISymbolAnimation : MonoBehaviour
         Sequence s = DOTween.Sequence();
         s.Append(transform.DORotate(endRot, 1f, RotateMode.Fast).SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo));
         s.SetLoops(-1, LoopType.Yoyo);
+
+
+        gameObject.OnDestroyAsObservable()
+            .Take(1)
+            .Subscribe(_ => s.Kill());
+        
         //transform.DORotate(endRot, 2f, RotateMode.Fast);
     }
     

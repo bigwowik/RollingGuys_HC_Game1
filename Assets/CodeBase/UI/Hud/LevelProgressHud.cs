@@ -9,7 +9,7 @@ using Zenject;
 
 namespace CodeBase.UI.Hud
 {
-    public class LevelProgress : MonoBehaviour
+    public class LevelProgressHud : MonoBehaviour
     {
         public Image ProgressFillImage;
         private IMapCreator _mapCreator;
