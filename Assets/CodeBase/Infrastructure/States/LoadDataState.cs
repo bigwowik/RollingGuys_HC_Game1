@@ -24,12 +24,19 @@ namespace CodeBase.Infrastructure.States
             //load data
             var data = _progressService.LoadData();
             
+            PrepareFactory();
+            
             InitMap();
             InitPlayer();
             InitStartMenu();
             
             
             _gameStateMachine.Enter<MainMenuState>();
+        }
+
+        private void PrepareFactory()
+        {
+            _gameFactory.PrepareFriends();
         }
 
         private void InitStartMenu()

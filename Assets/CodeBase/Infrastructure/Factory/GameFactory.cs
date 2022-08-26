@@ -1,6 +1,8 @@
 ﻿
 using CodeBase.Infrastructure.AssetManagment;
 using CodeBase.Infrastructure.Services.Randomness;
+using CodeBase.Infrastructure.States;
+using CodeBase.Logic.Friends;
 using CodeBase.Logic.Map;
 using CodeBase.Logic.Player;
 using UnityEngine;
@@ -10,10 +12,14 @@ namespace CodeBase.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
+        private const string FriendIdentifier = "Friend";
+        private const string HeroIdentifier = "Hero";
+
         //private readonly IAssets _assets;
         //private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
         private readonly DiContainer _diContainer;
+        private FriendPresenter.Factory _friendsFactory;
 
         //cashed references
         public GameObject Hud { get; private set; }
@@ -26,6 +32,25 @@ namespace CodeBase.Infrastructure.Factory
             //_staticData = staticData;
             _randomService = randomService;
             _diContainer = diContainer;
+
+            
+        }
+
+        public void PrepareFriends()
+        {
+            _diContainer
+                .Bind<ICharacterModel>()
+                .To<FriendModel>()
+                .WhenInjectedInto<FriendPresenter>();
+
+            _diContainer
+                .BindFactory<CharacterView, FriendPresenter, FriendPresenter.Factory>();
+            
+            var config = Resources.Load<FriendConfig>("Configs/FriendConfig");
+            _diContainer.Bind<FriendConfig>().FromInstance(config);
+
+            _friendsFactory = _diContainer.Resolve<FriendPresenter.Factory>();
+            
         }
 
         public IMapCreator CreateMapCreator()
@@ -53,22 +78,61 @@ namespace CodeBase.Infrastructure.Factory
             
             var heroConfig = Resources.Load<HeroConfig>("Configs/HeroConfig");
             _diContainer.Bind<HeroConfig>().FromInstance(heroConfig);
-            
-            
+
             PlayerGameObject = _diContainer.InstantiatePrefab(heroPrefab);
             PlayerGameObject.transform.position = at;
+            
+            var heroView = PlayerGameObject.GetComponentInChildren<CharacterView>();
+      
+            _diContainer
+                .Bind<ICharacterModel>()
+                .To<HeroModel>()
+                .AsSingle()
+                .WhenInjectedInto<HeroPresenter>();
+
+            _diContainer
+                .Bind<CharacterView>()
+                .FromInstance(heroView)
+                .AsSingle()
+                .WhenInjectedInto<HeroPresenter>();
 
             
-            var heroView = PlayerGameObject.GetComponentInChildren<HeroView>();
-            _diContainer.Bind<HeroView>().FromInstance(heroView);
-
-            
-            _diContainer.Bind<HeroModel>().AsSingle();
+                
             
             _diContainer.Bind<HeroPresenter>().AsSingle().NonLazy();
-
+            _diContainer.Resolve<HeroPresenter>().Start();
 
             return PlayerGameObject;
+        }
+
+        public GameObject CreateFriend(GameObject prefab, Vector3 at)
+        {
+            
+        
+            var instance = _diContainer.InstantiatePrefab(prefab);
+            instance.transform.position = at;
+            
+            var view = instance.GetComponentInChildren<CharacterView>();
+
+            //_diContainer.Bind<FriendMovement>().FromComponentInNewPrefab(prefab);
+            
+            // _diContainer
+            //     .Bind<CharacterView>()
+            //     .FromInstance(view)                
+            //     .WhenInjectedInto<FriendPresenter>();
+
+
+            var friendPresenter = _friendsFactory.Create(view);
+            friendPresenter.Start();
+            
+            // _diContainer
+            //     .Bind<FriendPresenter>()
+            //     .WithArguments(view)
+            //     .NonLazy();
+            
+            
+            
+            return instance;
         }
 
         public GameObject CreateHud()
@@ -79,13 +143,13 @@ namespace CodeBase.Infrastructure.Factory
 
             return Hud;
         }
-        
+
         public void CreateDialogUI()
         {
             var prefab = Resources.Load<GameObject>(AssetPaths.DialogUIPath);
             var dialogUI = InstantiateObject(prefab);
         }
-        
+
         public void CreateEnemySpawner(Vector3 at)
         {
             var prefab = Resources.Load<GameObject>(AssetPaths.EnemySpawner);
@@ -97,7 +161,6 @@ namespace CodeBase.Infrastructure.Factory
             //_assets.CleanUp();
         }
 
-       
 
         private GameObject InstantiateObject(GameObject prefab, Vector3 position)
         {
@@ -109,14 +172,19 @@ namespace CodeBase.Infrastructure.Factory
         {
             return InstantiateObject(prefab, Vector3.zero);
         }
-        
+
         public GameObject InstantiateThroughDi(GameObject prefab, Vector3 at)
         {
-            var instance = _diContainer.InstantiatePrefab(prefab);
-            instance.transform.position = at;
-            
+            GameObject instance = null;
+            if (prefab.GetComponent<IFriend>() != null)                                //TEMPERARY
+                instance = CreateFriend(prefab, at);
+            else
+            {
+                instance = _diContainer.InstantiatePrefab(prefab);
+                instance.transform.position = at;
+            }
+
             return instance;
         }
-        
     }
 }

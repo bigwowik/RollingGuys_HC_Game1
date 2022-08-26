@@ -47,4 +47,6 @@ namespace CodeBase.Logic.Friends
             _rigidbody.position = Vector3.Lerp(_rigidbody.position, _lastNextFriendPosition, Speed * Time.fixedDeltaTime);
         }
     }
+    
+    
 }

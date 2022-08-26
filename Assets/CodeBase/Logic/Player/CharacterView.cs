@@ -5,7 +5,7 @@ using Zenject;
 
 namespace CodeBase.Logic.Player
 {
-    public class HeroView : MonoBehaviour
+    public class CharacterView : MonoBehaviour
     {
         private Rigidbody _rigidbody;
         private void Awake()
