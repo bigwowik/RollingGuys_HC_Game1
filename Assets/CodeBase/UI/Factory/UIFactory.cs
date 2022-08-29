@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.AssetManagment;
+﻿using CodeBase.Helpers.Debug;
+using CodeBase.Infrastructure.AssetManagment;
 using CodeBase.Infrastructure.States;
 using CodeBase.StaticData;
 using CodeBase.UI.Windows.EndLevelWindow;
@@ -48,7 +49,7 @@ namespace CodeBase.UI.Factory
 
         public void CreateStartMenu()
         {
-            Debug.Log("Create Start Menu");
+            WDebug.Log(WType.UI, "Create Start Menu");
         }
 
         public EndLevelWindowPresenter CreateEndLevelWindow(EndLevelType endLevelType)

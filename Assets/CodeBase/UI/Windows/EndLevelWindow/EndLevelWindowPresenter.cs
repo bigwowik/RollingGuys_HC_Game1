@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure.States;
 using UniRx;
 using Unity.VisualScripting;
@@ -19,13 +20,13 @@ namespace CodeBase.UI.Windows.EndLevelWindow
          
             _model.MainButtonAction = () =>
             {
-                Debug.Log("Main Button Action");
+                WDebug.Log("Main Button Action", WType.UI);
                 CloseWindow();
             };
             
             _model.AdditionalButtonAction = () =>
             {
-                Debug.Log("Additional Button Action");
+                WDebug.Log("Additional Button Action", WType.UI);
                 CloseWindow();
             };
         }

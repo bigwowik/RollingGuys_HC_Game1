@@ -1,3 +1,4 @@
+using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic.Map;
 using CodeBase.Logic.Player;
@@ -25,7 +26,7 @@ namespace CodeBase.Infrastructure.States
 
         public void Enter()
         {
-            Debug.Log("Start game loop");
+            WDebug.Log("Start game loop", WType.GameStates);
             _levelProgressHud.StartLevelProgress(_mapCreator);
             
         }

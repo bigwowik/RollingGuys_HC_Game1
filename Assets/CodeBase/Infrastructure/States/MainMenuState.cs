@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CodeBase.Helpers.Debug;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -15,7 +16,7 @@ namespace CodeBase.Infrastructure.States
 
         public void Enter()
         {
-            Debug.Log("MainMenuState");
+            WDebug.Log("MainMenuState", WType.GameStates);
         }
 
         public void Exit()

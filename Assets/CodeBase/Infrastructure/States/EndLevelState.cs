@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure.Inputs;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Logic.Player;
@@ -47,7 +48,7 @@ namespace CodeBase.Infrastructure.States
         {
             _endLevelWindow.Closed -= ReloadGame;
             
-            Debug.Log("Reload scene.");
+            WDebug.Log(WType.Infrastructure, "Reload scene");
 
             var levelName = SceneManager.GetActiveScene().name;
             _gameStateMachine.Enter<LoadLevelState, string>(levelName);
@@ -61,10 +62,11 @@ namespace CodeBase.Infrastructure.States
             switch (payload)
             {
                 case EndLevelType.WIN:
-                    Debug.Log("WIN");
+                    WDebug.Log(WType.Infrastructure, "Win");
                     _progressService.CompleteLevel(true);
                     break;
                 case EndLevelType.FAIL:
+                    WDebug.Log(WType.Infrastructure, "Fail");
                     _progressService.CompleteLevel(false);
                     //
                     break;
