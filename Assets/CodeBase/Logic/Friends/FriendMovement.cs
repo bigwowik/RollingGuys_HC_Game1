@@ -9,21 +9,19 @@ namespace CodeBase.Logic.Friends
 {
     public class FriendMovement : MonoBehaviour
     {
+
+        private IInputService _inputService;
+        private FriendConfig _friendConfig;
+
+        private Rigidbody _rigidbody;
         private IFriend _friend;
         
-        public float CriticalDistance = 1f;
-        public float Speed = 1f;
-
-        
         private Vector3 _lastNextFriendPosition;
-        
-        private IInputService _inputService;
-        private Rigidbody _rigidbody;
-
 
         [Inject]
-        public void Construct(IInputService inputService)
+        public void Construct(IInputService inputService, FriendConfig friendConfig)
         {
+            _friendConfig = friendConfig;
             _inputService = inputService;
         }
 
@@ -36,15 +34,10 @@ namespace CodeBase.Logic.Friends
         {
             if(!_inputService.isActive) return;
             
-            //Debug.Log(name + " t.pos: " + transform.position + " rb pos: " + _rigidbody.position);
-            Debug.Log(name + " pos delta: " + (transform.position -_rigidbody.position));
-            
-            if (Vector3.Distance(_friend.NextFriend.Position, _rigidbody.position) > CriticalDistance)
-            {
+            if (Vector3.Distance(_friend.NextFriend.Position, _rigidbody.position) > _friendConfig.CriticalDistance)
                 _lastNextFriendPosition = _friend.NextFriend.Position;
-            }
-            
-            _rigidbody.position = Vector3.Lerp(_rigidbody.position, _lastNextFriendPosition, Speed * Time.fixedDeltaTime);
+
+            _rigidbody.position = Vector3.Lerp(_rigidbody.position, _lastNextFriendPosition, _friendConfig.Speed * Time.fixedDeltaTime);
         }
     }
     

@@ -36,7 +36,7 @@ namespace CodeBase.Infrastructure.States
 
         private void PrepareFactory()
         {
-            _gameFactory.PrepareFriends();
+            _gameFactory.PrepareFactory();
         }
 
         private void InitStartMenu()

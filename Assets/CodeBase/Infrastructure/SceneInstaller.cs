@@ -28,6 +28,16 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         
         BindGameFactory();
         BindUIFactory();
+        
+        BindLevelGameProgress();
+    }
+
+    private void BindLevelGameProgress()
+    {
+        Container
+            .Bind<ILevelProgressService>()
+            .To<LevelProgressService>()
+            .AsSingle();
     }
 
     private void BindRandomService()

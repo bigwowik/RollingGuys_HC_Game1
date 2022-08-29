@@ -1,13 +1,28 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Logic.Player;
+using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Friends
 {
     public class FriendChainElement : MonoBehaviour, IFriend
     {
+        private CinemachineVirtualCamera _camera;
+        private IGameFactory _gameFactory;
+        private ILevelProgressService _levelProgressService;
         public Vector3 Position => transform.position;
         public IFriend NextFriend { get; set; }
         public IFriend BackFriend { get; set; }
 
+        
+        [Inject]
+        public void Construct(ILevelProgressService levelProgressService)
+        {
+            _levelProgressService = levelProgressService;
+        }
+        
         public IFriend GetLastFriend
         {
             get
@@ -29,25 +44,36 @@ namespace CodeBase.Logic.Friends
             friend.BackFriend = BackFriend;
             
             BackFriend = friend;
-            
-            // var lastFriend = GetLastFriend;
-            // lastFriend.BackFriend = friend;
-            // friend.NextFriend = lastFriend;
         }
 
         public void RemoveMe()
         {
-            if (NextFriend == null)//if first element
+            if (NextFriend == null) //if first element
             {
                 if (BackFriend != null)
                 {
-                    GetComponent<Rigidbody>().position = BackFriend.Position;
-                    BackFriend.RemoveMe();
-
+                    var back = BackFriend.GetGameObject;
+                    back.GetComponent<Hero>().enabled = true;
+                    back.GetComponent<FriendMovement>().enabled = false;
+                    
+                    //hero.enabled = false;
+                    Destroy(gameObject);
+                    BackFriend.NextFriend = null;
+                    
+                    _levelProgressService.ActivePlayer = back.transform;
+                    _levelProgressService.PlayerCamera.Follow = back.transform;
+                    return;
                 }
                 else
                 {
                     Destroy(gameObject);
+
+                    
+                    _levelProgressService.ReloadLevel();
+                    
+                    
+                    
+                    return;
                 }
             }
             else
@@ -64,5 +90,8 @@ namespace CodeBase.Logic.Friends
 
 
         }
+
+        public GameObject GetGameObject => gameObject;
+        
     }
 }

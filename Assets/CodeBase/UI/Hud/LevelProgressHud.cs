@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Inputs;
 using CodeBase.Logic.Map;
 using CodeBase.Logic.Player;
@@ -14,19 +15,23 @@ namespace CodeBase.UI.Hud
         public Image ProgressFillImage;
         private IMapCreator _mapCreator;
         private IInputService _inputService;
-        private Transform _heroTransform;
+        private ILevelProgressService _levelProgressService;
 
         [Inject]
-        public void Construct(IInputService inputService)
+        public void Construct(IInputService inputService, ILevelProgressService levelProgressService)
         {
+            _levelProgressService = levelProgressService;
             _inputService = inputService;
-            
         }
 
-        public void StartLevelProgress(Transform heroTransform, IMapCreator mapCreator)
+        private void Start()
+        {
+            ProgressFillImage.fillAmount = 0;
+        }
+
+        public void StartLevelProgress(IMapCreator mapCreator)
         {
             _mapCreator = mapCreator;
-            _heroTransform = heroTransform;
             ProgressFillImage.gameObject.SetActive(true);
         }
         
@@ -34,7 +39,7 @@ namespace CodeBase.UI.Hud
         {
             if(!_inputService.isActive) return;
             
-            var amount = 1 - (_mapCreator.MapEndPosition - _heroTransform.position.z)/_mapCreator.MapEndPosition;
+            var amount = 1 - (_mapCreator.MapEndPosition - _levelProgressService.ActivePlayer.position.z)/_mapCreator.MapEndPosition;
             ProgressFillImage.fillAmount = amount;
         }
     }

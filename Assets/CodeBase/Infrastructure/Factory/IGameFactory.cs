@@ -1,4 +1,5 @@
 ﻿
+using Cinemachine;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Logic.Map;
 using UnityEngine;
@@ -17,6 +18,6 @@ namespace CodeBase.Infrastructure.Factory
         GameObject CreatePlayerCamera();
         GameObject InstantiateThroughDi(GameObject prefab, Vector3 at);
         GameObject CreateFriend(GameObject prefab, Vector3 at);
-        void PrepareFriends();
+        void PrepareFactory();
     }
 }

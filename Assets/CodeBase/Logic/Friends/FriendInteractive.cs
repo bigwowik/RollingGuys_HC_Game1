@@ -7,7 +7,7 @@ namespace CodeBase.Logic.Friends
 {
     public class FriendInteractive : TriggerInteractiveBase<IFriend>
     {
-        public CharacterView CharacterView;
+        public MonoBehaviour FriendMovement;
         
         private IFriend _friend;
 
@@ -18,7 +18,7 @@ namespace CodeBase.Logic.Friends
 
         protected override void OnTriggerAction(GameObject triggerObject)
         {
-            CharacterView.enabled = true;
+            FriendMovement.enabled = true;
             triggerObject.GetComponent<IFriend>().AddFriend(_friend);
         }
     }
