@@ -2,6 +2,6 @@
 {
     public interface IMapProvider
     {
-        Map GetMap();
+        Map GetMap(string currentLevel);
     }
 }

@@ -28,5 +28,10 @@ namespace CodeBase.Logic.Map
 
             return newMap;
         }
+
+        public Map GetMap(string currentLevel)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

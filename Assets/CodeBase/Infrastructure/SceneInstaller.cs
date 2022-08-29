@@ -4,6 +4,7 @@ using CodeBase.Infrastructure.Inputs;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Infrastructure.Services.Randomness;
 using CodeBase.Infrastructure.States;
+using CodeBase.Logic.Map;
 using CodeBase.StaticData;
 using CodeBase.UI.Factory;
 using Zenject;
@@ -30,7 +31,16 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         BindUIFactory();
         //configs
         BindConfigsService();
-        
+        BindMapProvider();
+
+    }
+
+    private void BindMapProvider()
+    {
+        Container
+            .Bind<IMapProvider>()
+            .To<MapProviderFromConfigs>()
+            .AsSingle();
     }
 
     private void BindSaveLoadDataService()

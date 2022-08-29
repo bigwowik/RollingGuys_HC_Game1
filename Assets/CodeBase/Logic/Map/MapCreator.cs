@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Services.Progress;
 using UnityEngine;
 using Zenject;
 
@@ -24,21 +25,23 @@ namespace CodeBase.Logic.Map
         private IGameFactory _gameFactory;        
         private Map _map;
         private float _lastElementPositionZ;
+        private IMapProvider _mapProvider;
+        private IProgressService _progressService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory, IMapProvider mapProvider, IProgressService progressService)
         {
+            _progressService = progressService;
+            _mapProvider = mapProvider;
             _gameFactory = gameFactory;
-            
-            //TODO from cofings service
-
-            
         }
 
         public void CreateMap()
         {
-            _map = GetComponent<IMapProvider>().GetMap();
+            //_map = GetComponent<IMapProvider>().GetMap();
 
+            var currentLevel = _progressService.ProgressData.LevelCurrent;
+            _map = _mapProvider.GetMap(currentLevel.ToString());
 
             ParseMapDataAndSpawn();
 
