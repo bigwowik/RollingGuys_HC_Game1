@@ -11,17 +11,20 @@ namespace CodeBase.Infrastructure.Services.Progress
         }
         public bool Load(string key, out T data)
         {
-            var json = PlayerPrefs.GetString(key, "");
-            if (json == "")
-            {
-                data = new T();
-                return false;
-            }
-            else
-            {
-                data = JsonUtility.FromJson<T>(json);
-                return true;
-            }
+            // data = new T();
+            // return false;
+            //for developing
+             var json = PlayerPrefs.GetString(key, "");
+             if (json == "")
+             {
+                 data = new T();
+                 return false;
+             }
+             else
+             {
+                 data = JsonUtility.FromJson<T>(json);
+                 return true;
+             }
             
         }
         

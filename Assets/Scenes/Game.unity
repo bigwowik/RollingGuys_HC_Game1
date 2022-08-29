@@ -1472,6 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainMenuButtons: {fileID: 1008903612}
   LevelProgressButton: {fileID: 0}
+  LevelProgressText: {fileID: 423705900}
 --- !u!114 &1044697605
 MonoBehaviour:
   m_ObjectHideFlags: 0
