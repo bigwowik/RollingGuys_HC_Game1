@@ -4,6 +4,7 @@ using CodeBase.Infrastructure.Inputs;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Infrastructure.Services.Randomness;
 using CodeBase.Infrastructure.States;
+using CodeBase.StaticData;
 using CodeBase.UI.Factory;
 using Zenject;
 
@@ -19,17 +20,22 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         BindSceneLoader();
 
         BindProgressService();
-        //BindRestartService();
-        
         BindRandomService();
-
-
-        //BindInstallerInterfaces();
         
         BindGameFactory();
         BindUIFactory();
         
         BindLevelGameProgress();
+
+        BindConfigsService();
+    }
+
+    private void BindConfigsService()
+    {
+        Container
+            .Bind<IConfigsService>()
+            .To<ConfigsService>()
+            .AsSingle();
     }
 
     private void BindLevelGameProgress()

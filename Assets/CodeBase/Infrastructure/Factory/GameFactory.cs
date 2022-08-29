@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.States;
 using CodeBase.Logic.Friends;
 using CodeBase.Logic.Map;
 using CodeBase.Logic.Player;
+using CodeBase.StaticData;
 using UnityEngine;
 using Zenject;
 
@@ -13,16 +14,10 @@ namespace CodeBase.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private const string FriendIdentifier = "Friend";
-        private const string HeroIdentifier = "HeroMovement";
-        private const string FriendConfigPath = "Configs/FriendConfig";
-        private const string HeroConfigPath = "Configs/HeroConfig";
-
-        //private readonly IAssets _assets;
-        //private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
         private readonly DiContainer _diContainer;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly IConfigsService _configsService;
         private GameObject _heroPrefab;
 
         //cashed references
@@ -30,22 +25,23 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject PlayerGameObject { get; set; }
 
 
-        public GameFactory(IRandomService randomService,  DiContainer diContainer, ILevelProgressService levelProgressService)
+        public GameFactory(IRandomService randomService,  DiContainer diContainer, ILevelProgressService levelProgressService, IConfigsService configsService)
         {
             //_assets = assets;
-            //_staticData = staticData;
+            //_configs = staticData;
             _randomService = randomService;
             _diContainer = diContainer;
             _levelProgressService = levelProgressService;
+            _configsService = configsService;
         }
 
         public void PrepareFactory()
         {
-            _diContainer.Bind<FriendConfig>().FromResource(FriendConfigPath).AsSingle();
-            _diContainer.Bind<HeroConfig>().FromResource(HeroConfigPath).AsSingle();
+            _configsService.LoadData();
+            _diContainer.Bind<FriendConfig>().FromInstance(_configsService.FriendConfig).AsSingle();
+            _diContainer.Bind<HeroConfig>().FromInstance(_configsService.HeroConfig).AsSingle();
             
             _heroPrefab = Resources.Load<GameObject>(AssetPaths.PlayerPrefabPath);
-            
         }
 
         #region HeroMovement

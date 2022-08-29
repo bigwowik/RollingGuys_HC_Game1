@@ -15,7 +15,7 @@ namespace CodeBase.UI.Factory
 
 
         private readonly IAssets _assets;
-        private readonly IStaticDataService _staticData;
+        private readonly IConfigsService _configs;
 
         private readonly Transform _uiRoot;
 
