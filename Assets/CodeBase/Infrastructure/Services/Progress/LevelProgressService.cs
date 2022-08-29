@@ -9,17 +9,13 @@ namespace CodeBase.Infrastructure.Services.Progress
     {
         private readonly IGameStateMachine _gameStateMachine;
 
-        public LevelProgressService(IGameStateMachine gameStateMachine)
-        {
+        public LevelProgressService(IGameStateMachine gameStateMachine) => 
             _gameStateMachine = gameStateMachine;
-        }
 
         public Transform ActivePlayer { get; set; }
         public CinemachineVirtualCamera PlayerCamera { get; set; }
 
-        public void ReloadLevel()
-        {
+        public void ReloadLevel() => 
             _gameStateMachine.Enter<EndLevelState, EndLevelType>(EndLevelType.FAIL);
-        }
     }
 }

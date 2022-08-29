@@ -6,16 +6,15 @@ using Zenject;
 
 namespace CodeBase.Logic.Player
 {
-    public class Hero : MonoBehaviour
+    public class HeroMovement : MonoBehaviour
     {
-
-        private Rigidbody _rigidbody;
-
+        //dependencies
         private IInputService _inputService;
-        
         private HeroConfig _heroConfig;
         
-
+        //components
+        private Rigidbody _rigidbody;
+        
         [Inject]
         public void Construct(IInputService inputService, HeroConfig heroConfig)
         {
@@ -23,10 +22,8 @@ namespace CodeBase.Logic.Player
             _heroConfig = heroConfig;
         }
 
-        private void Awake()
-        {
+        private void Awake() => 
             _rigidbody = GetComponent<Rigidbody>();
-        }
 
         private void FixedUpdate()
         {
@@ -34,7 +31,7 @@ namespace CodeBase.Logic.Player
                 Move();
         }
 
-        public void Move()
+        private void Move()
         {
             _rigidbody.MovePosition(_rigidbody.position + 
                                     (Vector3.forward * _heroConfig.ForwardSpeed + 

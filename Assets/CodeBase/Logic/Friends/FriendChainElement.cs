@@ -1,6 +1,5 @@
 ﻿using Cinemachine;
 using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.Services;
 using CodeBase.Logic.Player;
 using UnityEngine;
 using Zenject;
@@ -16,7 +15,6 @@ namespace CodeBase.Logic.Friends
         public IFriend NextFriend { get; set; }
         public IFriend BackFriend { get; set; }
 
-        
         [Inject]
         public void Construct(ILevelProgressService levelProgressService)
         {
@@ -53,7 +51,7 @@ namespace CodeBase.Logic.Friends
                 if (BackFriend != null)
                 {
                     var back = BackFriend.GetGameObject;
-                    back.GetComponent<Hero>().enabled = true;
+                    back.GetComponent<HeroMovement>().enabled = true;
                     back.GetComponent<FriendMovement>().enabled = false;
                     
                     //hero.enabled = false;
@@ -67,12 +65,7 @@ namespace CodeBase.Logic.Friends
                 else
                 {
                     Destroy(gameObject);
-
-                    
                     _levelProgressService.ReloadLevel();
-                    
-                    
-                    
                     return;
                 }
             }

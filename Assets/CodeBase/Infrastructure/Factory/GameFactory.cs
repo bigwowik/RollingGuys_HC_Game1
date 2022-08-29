@@ -14,7 +14,7 @@ namespace CodeBase.Infrastructure.Factory
     public class GameFactory : IGameFactory
     {
         private const string FriendIdentifier = "Friend";
-        private const string HeroIdentifier = "Hero";
+        private const string HeroIdentifier = "HeroMovement";
         private const string FriendConfigPath = "Configs/FriendConfig";
         private const string HeroConfigPath = "Configs/HeroConfig";
 
@@ -48,7 +48,7 @@ namespace CodeBase.Infrastructure.Factory
             
         }
 
-        #region Hero
+        #region HeroMovement
 
         public GameObject CreateHero(Vector3 at)
         {

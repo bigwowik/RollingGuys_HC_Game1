@@ -9,37 +9,15 @@ namespace CodeBase.Logic.Friends
     {
         public MonoBehaviour FriendMovement;
         
+        //components
         private IFriend _friend;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _friend = GetComponent<IFriend>();
-        }
 
         protected override void OnTriggerAction(GameObject triggerObject)
         {
             FriendMovement.enabled = true;
-            triggerObject.GetComponent<IFriend>().AddFriend(_friend);
-        }
-    }
-    
-    public class FriendInteractive2
-    {
-        private IFriend _friend;
-
-
-        public FriendInteractive2(GameObject gameObject)
-        {
-            gameObject.OnTriggerEnterAsObservable()
-                .Where(c => c.TryGetComponent<IFriend>(out var friend))
-                .Take(1)
-                .Subscribe(c => OnTriggerAction(c.gameObject));
-            
-            
-        }
-
-        protected void OnTriggerAction(GameObject triggerObject)
-        {
             triggerObject.GetComponent<IFriend>().AddFriend(_friend);
         }
     }
