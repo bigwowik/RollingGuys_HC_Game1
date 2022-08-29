@@ -21,7 +21,10 @@ namespace CodeBase.Infrastructure.States
         }
         public void Enter()
         {
+            
+            
             //load data
+            _progressService.Init();
             var data = _progressService.LoadData();
             
             PrepareFactory();

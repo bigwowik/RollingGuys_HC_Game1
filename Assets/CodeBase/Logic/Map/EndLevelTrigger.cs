@@ -1,18 +1,19 @@
-﻿using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.States;
 using CodeBase.Logic.Friends;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Logic.Enemy
 {
-    public class EndLevel : TriggerInteractiveBase<IFriend>
+    public class EndLevelTrigger : TriggerInteractiveBase<IFriend>
     {
-        private IGameStateMachine _gameStateMachine;
+        private ILevelProgressService _levelProgressService;
 
         [Inject]
-        public void Construct(IGameStateMachine gameStateMachine)
+        public void Construct(ILevelProgressService levelProgressService)
         {
-            _gameStateMachine = gameStateMachine;
+            _levelProgressService = levelProgressService;
         }
         
         protected override void OnTriggerAction(GameObject triggerObject)
@@ -21,7 +22,7 @@ namespace CodeBase.Logic.Enemy
                 ? EndLevelType.WIN 
                 : EndLevelType.FAIL;
 
-            _gameStateMachine.Enter<EndLevelState, EndLevelType>(endLevelType);
+            _levelProgressService.EndLevelTriggerAction(endLevelType);
         }
     }
 }

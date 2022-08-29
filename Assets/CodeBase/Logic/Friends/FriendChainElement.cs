@@ -65,7 +65,7 @@ namespace CodeBase.Logic.Friends
                 else
                 {
                     Destroy(gameObject);
-                    _levelProgressService.ReloadLevel();
+                    _levelProgressService.ReloadLevelWithFail();
                     return;
                 }
             }

@@ -62,9 +62,10 @@ namespace CodeBase.Infrastructure.States
             {
                 case EndLevelType.WIN:
                     Debug.Log("WIN");
-                    _progressService.IncreaseLevelValue();
+                    _progressService.CompleteLevel(true);
                     break;
                 case EndLevelType.FAIL:
+                    _progressService.CompleteLevel(false);
                     //
                     break;
                 default:

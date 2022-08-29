@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using CodeBase.Infrastructure.States;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factory
@@ -7,6 +8,7 @@ namespace CodeBase.Infrastructure.Factory
     {
         Transform ActivePlayer { get; set; }
         CinemachineVirtualCamera PlayerCamera { get; set; }
-        void ReloadLevel();
+        void ReloadLevelWithFail();
+        void EndLevelTriggerAction(EndLevelType endLevelType);
     }
 }

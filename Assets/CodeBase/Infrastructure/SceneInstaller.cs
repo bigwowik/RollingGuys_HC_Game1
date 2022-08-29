@@ -12,22 +12,33 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
 {
     public override void InstallBindings()
     {
+        //game
         BindGame();
         BindGameStateMachine();
-            
-        BindCoroutineRunner();
-        BindInputService();
+        //loading
         BindSceneLoader();
-
-        BindProgressService();
+        BindCoroutineRunner();
+        //others
+        BindInputService();
         BindRandomService();
-        
+        //progress
+        BindProgressService();
+        BindLevelGameProgress();
+        BindSaveLoadDataService();
+        //factory
         BindGameFactory();
         BindUIFactory();
-        
-        BindLevelGameProgress();
-
+        //configs
         BindConfigsService();
+        
+    }
+
+    private void BindSaveLoadDataService()
+    {
+        Container
+            .Bind<ISaveLoadService<ProgressData>>()
+            .To<SaveLoadService<ProgressData>>()
+            .AsSingle();
     }
 
     private void BindConfigsService()
@@ -83,9 +94,7 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         Container.Bind<GameLoopState>().AsSingle();
         
         Container.Bind<EndLevelState>().AsSingle();
-        
-        
-
+     
         //state machine
         Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
     }
@@ -120,14 +129,6 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
             .Bind<IUIFactory>()
             .To<UIFactory>()
             .AsSingle();
-    }
-
-    private void BindRestartService()
-    {
-        // Container
-        //     .Bind<IRestartService>()
-        //     .To<RestartService>()
-        //     .AsSingle();
     }
 
     private void BindCoroutineRunner()
