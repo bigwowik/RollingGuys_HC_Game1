@@ -1473,6 +1473,7 @@ MonoBehaviour:
   MainMenuButtons: {fileID: 1008903612}
   LevelProgressButton: {fileID: 0}
   LevelProgressText: {fileID: 423705900}
+  CoinsText: {fileID: 936240653}
 --- !u!114 &1044697605
 MonoBehaviour:
   m_ObjectHideFlags: 0

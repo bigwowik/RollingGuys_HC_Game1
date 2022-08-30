@@ -26,6 +26,7 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         BindProgressService();
         BindLevelGameProgress();
         BindSaveLoadDataService();
+        BindRewardService();
         //factory
         BindGameFactory();
         BindUIFactory();
@@ -33,6 +34,14 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         BindConfigsService();
         BindMapProvider();
 
+    }
+
+    private void BindRewardService()
+    {
+        Container
+            .Bind<IRewardService>()
+            .To<RewardService>()
+            .AsSingle();
     }
 
     private void BindMapProvider()

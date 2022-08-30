@@ -18,7 +18,7 @@ namespace CodeBase.Infrastructure
             DontDestroyOnLoad(this);
 
 #if UNITY_EDITOR
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
 #endif
 
         }

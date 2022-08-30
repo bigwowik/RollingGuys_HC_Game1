@@ -5,11 +5,13 @@ namespace CodeBase.Infrastructure.Services.Progress
     [Serializable]
     public class ProgressData
     {
+        public LevelProgressData LevelProgressData;
+        public ResourcesData ResourcesData;
+
         public ProgressData()
         {
-            LevelCurrent = 1;
+            LevelProgressData = new LevelProgressData();
+            ResourcesData = new ResourcesData();
         }
-
-        public int LevelCurrent;
     }
 }

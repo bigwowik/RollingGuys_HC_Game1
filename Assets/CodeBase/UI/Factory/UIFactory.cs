@@ -10,6 +10,7 @@ namespace CodeBase.UI.Factory
 {
     public class UIFactory : IUIFactory
     {
+        private readonly IRewardService _rewardService;
         private const string UIRootPath = "UI/UIRoot";
         private const string PauseMenuUIPath = "UI/Pause/Pause UI";
         private const string EndLevelWindowPath = "UI/Windows/EndLevelWindowView";
@@ -21,8 +22,9 @@ namespace CodeBase.UI.Factory
         private readonly Transform _uiRoot;
 
         //[Inject(Id = "UIRoot")]
-        public UIFactory(RectTransform uiRoot)
+        public UIFactory(RectTransform uiRoot, IRewardService rewardService)
         {
+            _rewardService = rewardService;
             _uiRoot = (Transform) uiRoot;
         }
         public void CreateSomeWindow()
@@ -59,7 +61,7 @@ namespace CodeBase.UI.Factory
             var view = GameObject.Instantiate(prefab, _uiRoot);
 
             EndLevelWindowModel windowModel = new EndLevelWindowModel();
-            EndLevelWindowPresenter windowPresenter = new EndLevelWindowPresenter(view, windowModel);
+            EndLevelWindowPresenter windowPresenter = new EndLevelWindowPresenter(view, windowModel, _rewardService);
 
             return windowPresenter;
         }

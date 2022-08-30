@@ -40,7 +40,7 @@ namespace CodeBase.Logic.Map
         {
             //_map = GetComponent<IMapProvider>().GetMap();
 
-            var currentLevel = _progressService.ProgressData.LevelCurrent;
+            var currentLevel = _progressService.ProgressData.LevelProgressData.LevelCurrent;
             _map = _mapProvider.GetMap(currentLevel.ToString());
 
             ParseMapDataAndSpawn();

@@ -21,15 +21,6 @@ namespace CodeBase.Infrastructure.Services.Progress
             ProgressData = TryLoadData();
         }
 
-        private ProgressData TryLoadData()
-        {
-            if (!_saveLoadService.Load(ProgressDataKey, out var data)) 
-                Debug.LogWarning("Saved Data has/'t founded. Created new data.");
-
-            return data;
-            
-        }
-
         public ProgressData LoadData()
         {
             return ProgressData;
@@ -38,10 +29,23 @@ namespace CodeBase.Infrastructure.Services.Progress
         public void CompleteLevel(bool withSuccess)
         {
             if(withSuccess)
-                ProgressData.LevelCurrent++;
-            
-            _saveLoadService.Save(ProgressDataKey, ProgressData);
+                ProgressData.LevelProgressData.LevelCurrent++;
+
+            //Save();
             Debug.LogWarning("Data was saved.");
+        }
+
+        private ProgressData TryLoadData()
+        {
+            if (!_saveLoadService.Load(ProgressDataKey, out var data)) 
+                Debug.LogWarning("Saved Data has/'t founded. Created new data.");
+
+            return data;
+        }
+
+        public void Save()
+        {
+            _saveLoadService.Save(ProgressDataKey, ProgressData);
         }
     }
 }

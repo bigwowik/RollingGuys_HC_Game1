@@ -14,12 +14,9 @@ namespace CodeBase.UI.Windows.EndLevelWindow
         public TextMeshProUGUI ResultText;
         public TextMeshProUGUI EarnValueText;
         
-        
-
-        
         public void SetEarnValue(int value)
         {
-            EarnValueText.text = value.ToString();
+            EarnValueText.text = "+ " + value;
         }
 
         public void SetResultText(string resultText)

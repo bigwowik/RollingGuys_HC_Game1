@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Infrastructure.Services.Progress;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,18 +7,9 @@ namespace CodeBase.UI.Windows.EndLevelWindow
 {
     public class EndLevelWindowModel : IEndLevelWindowModel
     {
-        public Action MainButtonAction;
-        public Action AdditionalButtonAction;
-        
-        
-        public void SetMainButtonAction(Action onMainButtonAction)
-        {
-            throw new NotImplementedException();
-        }
+        public Action MainButtonAction { get; set; }
+        public Action AdditionalButtonAction { get; set; }
 
-        public void SetAdditionalButtonAction(Action onAdditionalButtonAction)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

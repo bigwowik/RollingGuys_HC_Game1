@@ -2,7 +2,6 @@
 using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure.States;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CodeBase.UI.Windows.EndLevelWindow
@@ -11,24 +10,14 @@ namespace CodeBase.UI.Windows.EndLevelWindow
     {
         private readonly EndLevelWindowView _view;
         private readonly EndLevelWindowModel _model;
+        private readonly IRewardService _rewardService;
         public event Action Closed;
 
-        public EndLevelWindowPresenter(EndLevelWindowView view, EndLevelWindowModel model)
+        public EndLevelWindowPresenter(EndLevelWindowView view, EndLevelWindowModel model, IRewardService rewardService)
         {
             _view = view;
             _model = model;
-         
-            _model.MainButtonAction = () =>
-            {
-                WDebug.Log("Main Button Action", WType.UI);
-                CloseWindow();
-            };
-            
-            _model.AdditionalButtonAction = () =>
-            {
-                WDebug.Log("Additional Button Action", WType.UI);
-                CloseWindow();
-            };
+            _rewardService = rewardService;
         }
 
         private void CloseWindow()
@@ -37,44 +26,51 @@ namespace CodeBase.UI.Windows.EndLevelWindow
             Closed?.Invoke();
         }
 
-        public void Start(EndLevelType endLevelType)
+        public void Start(EndLevelData endLevelData)
         {
-            SetupView(endLevelType);
+            SetupView(endLevelData);
             
             
             _view.MainButton
                 .OnClickAsObservable()
                 .Take(1)
-                .Subscribe(_ => _model.MainButtonAction());
+                .Subscribe(z =>
+                {
+                    _rewardService.GiveAdsReward(endLevelData);
+                    WDebug.Log("Main Button Action", WType.UI);
+                    CloseWindow();
+                });
             
             _view.AdditionalButton
                 .OnClickAsObservable()
                 .Take(1)
-                .Subscribe(_ => _model.AdditionalButtonAction());
-            
-            
-            
-            
-            
-            
+                .Subscribe(z =>
+                {
+                    //_rewardService.GiveClassicReward(endLevelData);
+                    WDebug.Log("Additional Button Action", WType.UI);
+                    CloseWindow();
+                    
+                });
         }
 
-        private void SetupView(EndLevelType endLevelType)
+        private void SetupView(EndLevelData endLevelData)
         {
-            switch (endLevelType)
+            switch (endLevelData.EndLevelType)
             {
                 case EndLevelType.WIN:
                     _view.SetResultText("WIN");
-                    _view.SetMainButtonText("+100 by ADS");
+                    _view.SetEarnValue(endLevelData.CollectedCoins);
+                    _view.SetMainButtonText("x3 by ADS");
                     _view.SetAdditionalButton("No thanks");
                     break;
                 case EndLevelType.FAIL:
                     _view.SetResultText("FAIL");
-                    _view.SetMainButtonText("+10 by ADS");
+                    _view.SetEarnValue(endLevelData.CollectedCoins);
+                    _view.SetMainButtonText("x2 by ADS");
                     _view.SetAdditionalButton("No thanks");
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(endLevelType), endLevelType, null);
+                    throw new ArgumentOutOfRangeException(nameof(endLevelData.EndLevelType), endLevelData.EndLevelType, null);
             }
         }
     }

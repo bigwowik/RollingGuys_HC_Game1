@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Helpers.Debug;
+using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Inputs;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Logic.Player;
@@ -17,31 +18,52 @@ namespace CodeBase.Infrastructure.States
         private readonly IUIFactory _uiFactory;
         private readonly IProgressService _progressService;
         private readonly IInputService _inputService;
+        private readonly ILevelProgressService _levelProgressService;
+        private readonly IRewardService _rewardService;
 
         private EndLevelWindowPresenter _endLevelWindow;
 
-        public EndLevelState(IGameStateMachine gameStateMachine, IUIFactory uiFactory, IProgressService progressService, IInputService inputService)
+        public EndLevelState(IGameStateMachine gameStateMachine, 
+            IUIFactory uiFactory, 
+            IProgressService progressService, 
+            IInputService inputService,
+            ILevelProgressService levelProgressService,
+            IRewardService rewardService)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
             _progressService = progressService;
             _inputService = inputService;
+            _levelProgressService = levelProgressService;
+            _rewardService = rewardService;
         }
 
         public void Enter(EndLevelType endLevelType)
         {
-            ProgressUpdate(endLevelType);
 
-
+            var endLevelData = CreateEndLevelData(endLevelType);
+            _rewardService.GiveClassicReward(endLevelData);
 
             _inputService.isBlocked = true;
-            //_hero.CanMove = false;
             
             _endLevelWindow = _uiFactory.CreateEndLevelWindow(endLevelType);
-            _endLevelWindow.Start(endLevelType);
+            _endLevelWindow.Start(endLevelData);
             _endLevelWindow.Closed += ReloadGame;
+            
+            
+            ProgressUpdateAndSave(endLevelType);
 
+        }
 
+        private EndLevelData CreateEndLevelData(EndLevelType endLevelType)
+        {
+            var collectedCoins = _levelProgressService.GetAndResetCollectedCoins();
+            var dataLevelEnded = new EndLevelData()
+            {
+                EndLevelType = endLevelType,
+                CollectedCoins = collectedCoins
+            };
+            return dataLevelEnded;
         }
 
         private void ReloadGame()
@@ -57,7 +79,7 @@ namespace CodeBase.Infrastructure.States
             //reload scene
         }
 
-        private void ProgressUpdate(EndLevelType payload)
+        private void ProgressUpdateAndSave(EndLevelType payload)
         {
             switch (payload)
             {

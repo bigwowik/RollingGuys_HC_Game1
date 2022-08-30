@@ -10,5 +10,7 @@ namespace CodeBase.Infrastructure.Factory
         CinemachineVirtualCamera PlayerCamera { get; set; }
         void ReloadLevelWithFail();
         void EndLevelTriggerAction(EndLevelType endLevelType);
+        void AddCoin(int coinCount);
+        int GetAndResetCollectedCoins();
     }
 }

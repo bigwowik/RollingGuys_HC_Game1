@@ -11,21 +11,25 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
         private readonly IUIFactory _uiFactory;
+        private readonly IMediator _mediator;
 
-        public LoadDataState(IGameStateMachine gameStateMachine, IProgressService progressService, IGameFactory gameFactory, IUIFactory uiFactory)
+        public LoadDataState(IGameStateMachine gameStateMachine, IProgressService progressService, IGameFactory gameFactory, IUIFactory uiFactory, IMediator mediator)
         {
             _gameStateMachine = gameStateMachine;
             _gameFactory = gameFactory;
             _progressService = progressService;
             _uiFactory = uiFactory;
+            _mediator = mediator;
         }
         public void Enter()
         {
-            
-            
             //load data
             _progressService.Init();
+            
+            //set start UI
             var data = _progressService.LoadData();
+            _mediator.SetCoinsText(data.ResourcesData.Coins.ToString());
+            
             
             PrepareFactory();
             

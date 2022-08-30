@@ -13,14 +13,9 @@ public class Mediator : MonoBehaviour, IMediator
     [SerializeField] private Transform MainMenuButtons;
     [SerializeField] private Transform LevelProgressButton;
     [SerializeField] private TextMeshProUGUI LevelProgressText;
+    [SerializeField] private TextMeshProUGUI CoinsText;
 
     [Button()] public void DisableMainMenu() => MainMenuButtons.gameObject.SetActive(false);
-
-    [Button()] public void SetLevelText(string text) => LevelProgressText.text = text;
-}
-
-public interface IMediator
-{
-    void DisableMainMenu();
-    void SetLevelText(string text);
+    public void SetLevelText(string text) => LevelProgressText.text = text;
+    public void SetCoinsText(string text) => CoinsText.text = text;
 }

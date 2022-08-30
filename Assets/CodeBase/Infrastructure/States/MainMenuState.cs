@@ -31,7 +31,7 @@ namespace CodeBase.Infrastructure.States
 
         private void SetLevelProgressText()
         {
-            var levelText = $"Level {_progressService.ProgressData.LevelCurrent}";
+            var levelText = $"Level {_progressService.ProgressData.LevelProgressData.LevelCurrent}";
             _mediator.SetLevelText(levelText);
         }
     }

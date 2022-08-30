@@ -8,5 +8,6 @@ namespace CodeBase.Infrastructure.Services.Progress
         ProgressData LoadData();
         void CompleteLevel(bool withSuccess);
         void Init();
+        void Save();
     }
 }
