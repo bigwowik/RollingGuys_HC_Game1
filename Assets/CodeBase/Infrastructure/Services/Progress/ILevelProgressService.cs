@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using CodeBase.Infrastructure.States;
 using UnityEngine;
 
@@ -12,5 +13,7 @@ namespace CodeBase.Infrastructure.Factory
         void EndLevelTriggerAction(LevelResult levelResult);
         void AddCoin(int coinCount);
         int GetAndResetCollectedCoins();
+        event Action OnLevelStarted;
+        void StartLevel();
     }
 }

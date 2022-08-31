@@ -13,21 +13,26 @@ namespace CodeBase.Infrastructure.States
         private readonly IMapCreator _mapCreator;
         private readonly LevelProgressHud _levelProgressHud;
         private readonly IGameFactory _gameFactory;
+        private readonly ILevelProgressService _levelProgressService;
 
         public GameLoopState(IGameStateMachine gameStateMachine, 
             IMapCreator mapCreator, 
-            LevelProgressHud levelProgressHud, IGameFactory gameFactory)
+            LevelProgressHud levelProgressHud, 
+            IGameFactory gameFactory,
+            ILevelProgressService levelProgressService)
         {
             _gameStateMachine = gameStateMachine;
             _mapCreator = mapCreator;
             _levelProgressHud = levelProgressHud;
             _gameFactory = gameFactory;
+            _levelProgressService = levelProgressService;
         }
 
         public void Enter()
         {
             WDebug.Log("Start game loop", WType.GameStates);
             _levelProgressHud.StartLevelProgress(_mapCreator);
+            _levelProgressService.StartLevel();
             
         }
 

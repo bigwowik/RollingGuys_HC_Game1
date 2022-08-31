@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.States;
 using UnityEngine;
@@ -13,6 +14,13 @@ namespace CodeBase.Infrastructure.Services.Progress
         public CinemachineVirtualCamera PlayerCamera { get; set; }
 
         private int _collectedCoins;
+
+        public event Action OnLevelStarted;
+
+        public void StartLevel()
+        {
+            OnLevelStarted?.Invoke();
+        }
 
         public LevelProgressService(IGameStateMachine gameStateMachine)
         {
@@ -38,7 +46,7 @@ namespace CodeBase.Infrastructure.Services.Progress
             _collectedCoins = 0;
             return coins;
         }
-        
+
 
         public void ReloadLevelWithFail()
         {
