@@ -6,7 +6,7 @@ using Zenject;
 
 namespace CodeBase.Logic.Enemy
 {
-    public class EndLevelTrigger : TriggerInteractiveBase<IFriend>
+    public class EndLevelTrigger : TriggerInteractiveBase<FriendChain>
     {
         private ILevelProgressService _levelProgressService;
 
@@ -18,9 +18,9 @@ namespace CodeBase.Logic.Enemy
         
         protected override void OnTriggerAction(GameObject triggerObject)
         {
-            var endLevelType = triggerObject.GetComponent<IFriend>().GetBackFriendsChainCount() > 1 
-                ? EndLevelType.WIN 
-                : EndLevelType.FAIL;
+            var endLevelType = triggerObject.GetComponent<FriendChain>().GetBackFriendsChainCount() > 1 
+                ? LevelResult.WIN 
+                : LevelResult.FAIL;
 
             _levelProgressService.EndLevelTriggerAction(endLevelType);
         }

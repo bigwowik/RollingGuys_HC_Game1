@@ -55,22 +55,22 @@ namespace CodeBase.UI.Windows.EndLevelWindow
 
         private void SetupView(EndLevelData endLevelData)
         {
-            switch (endLevelData.EndLevelType)
+            switch (endLevelData.Result)
             {
-                case EndLevelType.WIN:
+                case LevelResult.WIN:
                     _view.SetResultText("WIN");
                     _view.SetEarnValue(endLevelData.CollectedCoins);
                     _view.SetMainButtonText("x3 by ADS");
                     _view.SetAdditionalButton("No thanks");
                     break;
-                case EndLevelType.FAIL:
+                case LevelResult.FAIL:
                     _view.SetResultText("FAIL");
                     _view.SetEarnValue(endLevelData.CollectedCoins);
                     _view.SetMainButtonText("x2 by ADS");
                     _view.SetAdditionalButton("No thanks");
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(endLevelData.EndLevelType), endLevelData.EndLevelType, null);
+                    throw new ArgumentOutOfRangeException(nameof(endLevelData.Result), endLevelData.Result, null);
             }
         }
     }

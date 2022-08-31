@@ -10,6 +10,6 @@ namespace CodeBase.UI.Factory
         void CreateUIRoot();
         void CreatePauseMenu();
         void CreateStartMenu();
-        EndLevelWindowPresenter CreateEndLevelWindow(EndLevelType endLevelType);
+        EndLevelWindowPresenter CreateEndLevelWindow(LevelResult levelResult);
     }
 }

@@ -9,7 +9,7 @@ namespace CodeBase.Infrastructure.Factory
         Transform ActivePlayer { get; set; }
         CinemachineVirtualCamera PlayerCamera { get; set; }
         void ReloadLevelWithFail();
-        void EndLevelTriggerAction(EndLevelType endLevelType);
+        void EndLevelTriggerAction(LevelResult levelResult);
         void AddCoin(int coinCount);
         int GetAndResetCollectedCoins();
     }

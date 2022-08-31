@@ -2,10 +2,10 @@
 {
     public static class FriendExtensions
     {
-        public static int GetBackFriendsChainCount(this IFriend friend)
+        public static int GetBackFriendsChainCount(this FriendChain friend)
         {
-            return friend.BackFriend != null ?
-                friend.BackFriend.GetBackFriendsChainCount() + 1 : 1;
+            return friend.Previous != null ?
+                friend.Previous.GetBackFriendsChainCount() + 1 : 1;
         }
     }
 }

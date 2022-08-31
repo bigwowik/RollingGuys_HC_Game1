@@ -6,7 +6,7 @@ using Zenject;
 
 namespace CodeBase.Logic.Friends
 {
-    public class Coin : TriggerInteractiveBase<IFriend>
+    public class Coin : TriggerInteractiveBase<FriendChain>
     {
         [SerializeField] private int CoinCount = 1;
         private ILevelProgressService _levelProgressService;

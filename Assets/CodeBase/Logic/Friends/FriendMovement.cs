@@ -15,7 +15,7 @@ namespace CodeBase.Logic.Friends
 
         //components
         private Rigidbody _rigidbody;
-        private IFriend _friend;
+        private FriendChain _friend;
         
         //variables
         private Vector3 _nextPosition;
@@ -29,7 +29,7 @@ namespace CodeBase.Logic.Friends
 
         private void Awake()
         {
-            _friend = GetComponent<IFriend>();
+            _friend = GetComponent<FriendChain>();
             _rigidbody = GetComponent<Rigidbody>();
         }
 
@@ -49,11 +49,11 @@ namespace CodeBase.Logic.Friends
         private void TryUpdateNextPosition()
         {
             if (DistanceGreaterCritical())
-                _nextPosition = _friend.NextFriend.Position;
+                _nextPosition = _friend.Next.Position;
         }
 
         private bool DistanceGreaterCritical() => 
-            Vector3.Distance(_friend.NextFriend.Position, _rigidbody.position) > _friendConfig.CriticalDistance;
+            Vector3.Distance(_friend.Next.Position, _rigidbody.position) > _friendConfig.CriticalDistance;
 
         private void TrySetStartNextPosition()
         {
@@ -62,7 +62,7 @@ namespace CodeBase.Logic.Friends
         }
 
         private void UpdateNextPosition() => 
-            _nextPosition = _friend.NextFriend.Position;
+            _nextPosition = _friend.Next.Position;
     }
     
     

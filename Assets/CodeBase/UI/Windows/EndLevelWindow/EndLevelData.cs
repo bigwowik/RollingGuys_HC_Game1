@@ -4,7 +4,7 @@ namespace CodeBase.UI.Windows.EndLevelWindow
 {
     public struct EndLevelData
     {
-        public EndLevelType EndLevelType;
+        public LevelResult Result;
         public int CollectedCoins;
     }
 }

@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.States
 {
-    public class EndLevelState : IPayloadState<EndLevelType>
+    public class EndLevelState : IPayloadState<LevelResult>
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IUIFactory _uiFactory;
@@ -38,29 +38,35 @@ namespace CodeBase.Infrastructure.States
             _rewardService = rewardService;
         }
 
-        public void Enter(EndLevelType endLevelType)
+        public void Enter(LevelResult levelResult)
         {
-
-            var endLevelData = CreateEndLevelData(endLevelType);
-            _rewardService.GiveClassicReward(endLevelData);
-
-            _inputService.isBlocked = true;
+            BlockInput();
             
-            _endLevelWindow = _uiFactory.CreateEndLevelWindow(endLevelType);
-            _endLevelWindow.Start(endLevelData);
-            _endLevelWindow.Closed += ReloadGame;
+            var endLevelData = CreateEndLevelData(levelResult);
             
-            
-            ProgressUpdateAndSave(endLevelType);
+            CreateEndLevelWindow(levelResult, endLevelData);
+            ProgressUpdate(endLevelData);
 
         }
 
-        private EndLevelData CreateEndLevelData(EndLevelType endLevelType)
+        private void BlockInput()
+        {
+            _inputService.isBlocked = true;
+        }
+
+        private void CreateEndLevelWindow(LevelResult levelResult, EndLevelData endLevelData)
+        {
+            _endLevelWindow = _uiFactory.CreateEndLevelWindow(levelResult);
+            _endLevelWindow.Start(endLevelData);
+            _endLevelWindow.Closed += ReloadGame;
+        }
+
+        private EndLevelData CreateEndLevelData(LevelResult levelResult)
         {
             var collectedCoins = _levelProgressService.GetAndResetCollectedCoins();
             var dataLevelEnded = new EndLevelData()
             {
-                EndLevelType = endLevelType,
+                Result = levelResult,
                 CollectedCoins = collectedCoins
             };
             return dataLevelEnded;
@@ -68,26 +74,30 @@ namespace CodeBase.Infrastructure.States
 
         private void ReloadGame()
         {
-            _endLevelWindow.Closed -= ReloadGame;
-            
             WDebug.Log(WType.Infrastructure, "Reload scene");
-
+            
+            _endLevelWindow.Closed -= ReloadGame;
+            //reload scene
             var levelName = SceneManager.GetActiveScene().name;
             _gameStateMachine.Enter<LoadLevelState, string>(levelName);
-            
-            
-            //reload scene
         }
 
-        private void ProgressUpdateAndSave(EndLevelType payload)
+        private void ProgressUpdate(EndLevelData endLevelData)
+        {
+            _rewardService.GiveClassicReward(endLevelData);
+            ProgressUpdate(endLevelData.Result);
+            _progressService.Save();
+        }
+
+        private void ProgressUpdate(LevelResult payload)
         {
             switch (payload)
             {
-                case EndLevelType.WIN:
+                case LevelResult.WIN:
                     WDebug.Log(WType.Infrastructure, "Win");
                     _progressService.CompleteLevel(true);
                     break;
-                case EndLevelType.FAIL:
+                case LevelResult.FAIL:
                     WDebug.Log(WType.Infrastructure, "Fail");
                     _progressService.CompleteLevel(false);
                     //

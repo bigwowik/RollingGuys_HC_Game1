@@ -1,6 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.UI.Factory;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States

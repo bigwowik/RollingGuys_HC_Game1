@@ -120,7 +120,7 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject InstantiateThroughDi(GameObject prefab, Vector3 at)
         {
             GameObject instance = null;
-            if (prefab.GetComponent<IFriend>() != null)                                //TEMPERARY
+            if (prefab.GetComponent<FriendChain>() != null)                                //TEMPERARY
                 instance = CreateFriend(prefab, at);
             else
             {

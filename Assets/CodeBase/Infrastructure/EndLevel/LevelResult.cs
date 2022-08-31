@@ -1,6 +1,6 @@
 ﻿namespace CodeBase.Infrastructure.States
 {
-    public enum EndLevelType
+    public enum LevelResult
     {
         WIN,
         FAIL

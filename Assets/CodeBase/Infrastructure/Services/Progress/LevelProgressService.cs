@@ -21,9 +21,9 @@ namespace CodeBase.Infrastructure.Services.Progress
             _collectedCoins = 0;
         }
 
-        public void EndLevelTriggerAction(EndLevelType endLevelType)
+        public void EndLevelTriggerAction(LevelResult levelResult)
         {
-            _gameStateMachine.Enter<EndLevelState, EndLevelType>(endLevelType);
+            _gameStateMachine.Enter<EndLevelState, LevelResult>(levelResult);
             
         }
 
@@ -42,7 +42,7 @@ namespace CodeBase.Infrastructure.Services.Progress
 
         public void ReloadLevelWithFail()
         {
-            _gameStateMachine.Enter<EndLevelState, EndLevelType>(EndLevelType.FAIL);
+            _gameStateMachine.Enter<EndLevelState, LevelResult>(LevelResult.FAIL);
         }
         
     }

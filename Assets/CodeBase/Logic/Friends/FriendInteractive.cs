@@ -5,20 +5,22 @@ using UnityEngine;
 
 namespace CodeBase.Logic.Friends
 {
-    public class FriendInteractive : TriggerInteractiveBase<IFriend>
+    public class FriendInteractive : TriggerInteractiveBase<FriendChain>
     {
         public MonoBehaviour FriendMovement;
         
         //components
-        private IFriend _friend;
+        private FriendChain _friend;
 
         private void Awake() => 
-            _friend = GetComponent<IFriend>();
+            _friend = GetComponent<FriendChain>();
 
         protected override void OnTriggerAction(GameObject triggerObject)
         {
+            if(FriendMovement.enabled) return;
+            
             FriendMovement.enabled = true;
-            triggerObject.GetComponent<IFriend>().AddFriend(_friend);
+            triggerObject.GetComponent<FriendChain>().AddFriend(_friend);
         }
     }
 }

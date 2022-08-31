@@ -19,18 +19,22 @@ MonoBehaviour:
   - Key: Floor
     Prefab: {fileID: 6691576503384744992, guid: 3dc56ca7c1dd6194e9e46ea8795e56d7,
       type: 3}
-  - Key: 1
+  - Key: F
     Prefab: {fileID: 7847487040895605341, guid: 641be69652945844699560f139917286,
       type: 3}
-  - Key: 2
-    Prefab: {fileID: 1418698824607260289, guid: 41a3461fb6dfbda49894acbbabf6ba3e,
+  - Key: C
+    Prefab: {fileID: 8703607355896056082, guid: 68ccd9eb41017a3488d078b7337adc5f,
       type: 3}
-  - Key: 3
-    Prefab: {fileID: 5566454453410383622, guid: 0a54faf71f6f1d54bbb5152aeba08dbd,
-      type: 3}
-  - Key: 4
+  - Key: 1
     Prefab: {fileID: 5566454453410383622, guid: dcaf03c79ac7e3f4d85b947f75e4d620,
       type: 3}
+  - Key: 2
+    Prefab: {fileID: 722447953920023210, guid: c00633aea609ec54c9f1c83fc9995311, type: 3}
+  - Key: 3
+    Prefab: {fileID: 722447953920023210, guid: 5fac7ab8c57376e47a766095a1f1a4c3, type: 3}
+  - Key: 4
+    Prefab: {fileID: 1499355788655196408, guid: 77fb5e6643870ff4ea5395d8e8234310,
+      type: 3}
   - Key: 5
-    Prefab: {fileID: 8703607355896056082, guid: 68ccd9eb41017a3488d078b7337adc5f,
+    Prefab: {fileID: 1499355788655196408, guid: 1affebaeeed0e25428825cec6b03c28e,
       type: 3}

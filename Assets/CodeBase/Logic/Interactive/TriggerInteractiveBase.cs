@@ -11,8 +11,8 @@ namespace CodeBase.Logic.Friends
         {
             this.OnTriggerEnterAsObservable()
                 .Where(c => c.TryGetComponent<T>(out var friend))
-                .Take(1)
-                .Subscribe(c => OnTriggerAction(c.gameObject));
+                .Subscribe(c => OnTriggerAction(c.gameObject))
+                .AddTo(gameObject);
         }
         protected abstract void OnTriggerAction(GameObject triggerObject);
     }

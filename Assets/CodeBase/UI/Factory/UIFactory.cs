@@ -54,7 +54,7 @@ namespace CodeBase.UI.Factory
             WDebug.Log(WType.UI, "Create Start Menu");
         }
 
-        public EndLevelWindowPresenter CreateEndLevelWindow(EndLevelType endLevelType)
+        public EndLevelWindowPresenter CreateEndLevelWindow(LevelResult levelResult)
         {
             var prefab = Resources.Load<EndLevelWindowView>(EndLevelWindowPath);
             
