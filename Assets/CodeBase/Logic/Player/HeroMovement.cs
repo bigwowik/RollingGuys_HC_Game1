@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeBase.Infrastructure.Inputs;
 using CodeBase.Logic.Friends;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,9 @@ namespace CodeBase.Logic.Player
         
         //components
         private Rigidbody _rigidbody;
+
+        private float _speed;
+        private float _lerpMaxSpeed;
         
         [Inject]
         public void Construct(IInputService inputService, HeroConfig heroConfig)
@@ -26,16 +30,18 @@ namespace CodeBase.Logic.Player
             _rigidbody = GetComponent<Rigidbody>();
 
         private void FixedUpdate()
-        {
-            if (_inputService.isActive)
-                Move();
+        { 
+            _lerpMaxSpeed = _inputService.isActive ? 1f : 0f;
+            _speed = Mathf.Lerp(_speed, _lerpMaxSpeed, _heroConfig.Acceleration * Time.fixedDeltaTime);
+            Move(_speed);
         }
 
-        private void Move()
+        private void Move(float lerpSpeed)
         {
             _rigidbody.MovePosition(_rigidbody.position + 
                                     (Vector3.forward * _heroConfig.ForwardSpeed + 
                                      Vector3.right * _inputService.VelocityX * _heroConfig.HorizontalSpeed) 
+                                    * lerpSpeed 
                                     * Time.fixedDeltaTime);
         }
     }

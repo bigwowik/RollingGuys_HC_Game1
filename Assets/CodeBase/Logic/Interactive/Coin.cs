@@ -19,7 +19,8 @@ namespace CodeBase.Logic.Friends
         protected override void OnTriggerAction(GameObject triggerObject)
         {
             _levelProgressService.AddCoin(CoinCount);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
     }
 }

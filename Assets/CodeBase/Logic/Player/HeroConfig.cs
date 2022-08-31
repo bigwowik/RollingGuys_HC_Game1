@@ -7,5 +7,6 @@ namespace CodeBase.Logic.Player
     {
         public float ForwardSpeed = 1;
         public float HorizontalSpeed = 1;
+        public float Acceleration = 5f;
     }
 }

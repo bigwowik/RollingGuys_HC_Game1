@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7ef4cde18749f2bd3815a13bd05b66, type: 3}
   m_Name: HeroConfig
   m_EditorClassIdentifier: 
-  ForwardSpeed: 3
-  HorizontalSpeed: 3
+  ForwardSpeed: 5
+  HorizontalSpeed: 4
+  Acceleration: 7

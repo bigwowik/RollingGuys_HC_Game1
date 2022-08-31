@@ -12,15 +12,21 @@ namespace CodeBase.Logic.Friends
         //components
         private FriendChain _friend;
 
+        private bool _wasActivated;
+        
+
         private void Awake() => 
             _friend = GetComponent<FriendChain>();
 
         protected override void OnTriggerAction(GameObject triggerObject)
         {
-            if(FriendMovement.enabled) return;
+
+            if(_wasActivated) return;
+            _wasActivated = true;
             
             FriendMovement.enabled = true;
             triggerObject.GetComponent<FriendChain>().AddFriend(_friend);
+            
         }
     }
 }

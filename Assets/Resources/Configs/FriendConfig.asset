@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FriendConfig
   m_EditorClassIdentifier: 
   CriticalDistance: 0.5
-  Speed: 3
+  Speed: 6
