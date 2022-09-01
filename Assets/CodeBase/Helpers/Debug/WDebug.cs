@@ -17,6 +17,7 @@ namespace CodeBase.Helpers.Debug
                 new DebugMessageType(WType.Services, Color.green),
                 new DebugMessageType(WType.UI, Color.yellow),
                 new DebugMessageType(WType.GameStates, Color.cyan),
+                new DebugMessageType(WType.Data, new Color(210,105,30)),
             };
         }
 
@@ -60,6 +61,7 @@ namespace CodeBase.Helpers.Debug
         Logic,
         Services,
         UI,
-        GameStates
+        GameStates,
+        Data
     }
 }

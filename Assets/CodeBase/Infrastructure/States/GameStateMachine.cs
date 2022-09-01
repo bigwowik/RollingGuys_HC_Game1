@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CodeBase.Helpers.Debug;
 using Zenject;
 
 namespace CodeBase.Infrastructure.States
@@ -17,11 +18,13 @@ namespace CodeBase.Infrastructure.States
         public void Enter<TState>() where TState : class, IState
         {
             IState state = ChangeState<TState>();
+            WDebug.Log($"Enter to {typeof(TState).ToString()}", WType.GameStates);
             state.Enter();
         }
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload>
         {
             TState state = ChangeState<TState>();
+            WDebug.Log($"Enter to: {typeof(TState).ToString()} with payload: {payload.ToString()}", WType.GameStates);
             state.Enter(payload);
         }
 

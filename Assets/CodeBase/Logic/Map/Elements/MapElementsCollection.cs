@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace CodeBase.Logic.Map
                 return element.Prefab;
             else
             {
-                Debug.LogWarning($"Map element with key: {elementKey} has not found");
+                WDebug.Log($"Map element with key: {elementKey} has not found", WType.Logic);
                 return null;
             }
         }

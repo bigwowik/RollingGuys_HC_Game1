@@ -29,8 +29,6 @@ namespace CodeBase.UI.Animations
         [Inject]
         public void Construct(IInputService inputService)
         {
-            WDebug.Log("Construct", WType.Logic);
-
             _inputService = inputService;
         }
 
@@ -38,9 +36,7 @@ namespace CodeBase.UI.Animations
         {
             _isTutorialActive = true;
             _canvasGroup = GetComponentInChildren<CanvasGroup>();
-            
-            WDebug.Log("Start", WType.Logic);
-
+     
             SubscribeToDisable();
 
             

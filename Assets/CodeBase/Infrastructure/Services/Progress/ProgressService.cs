@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CodeBase.Helpers.Debug;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.Services.Progress
 {
@@ -32,13 +33,13 @@ namespace CodeBase.Infrastructure.Services.Progress
                 ProgressData.LevelProgressData.LevelCurrent++;
 
             //Save();
-            Debug.LogWarning("Data was saved.");
+            WDebug.Log("Data was saved.", WType.Data);
         }
 
         private ProgressData TryLoadData()
         {
             if (!_saveLoadService.Load(ProgressDataKey, out var data)) 
-                Debug.LogWarning("Saved Data has/'t founded. Created new data.");
+                WDebug.Log("Saved Data has/'t founded. Created new data.",WType.Data);
 
             return data;
         }

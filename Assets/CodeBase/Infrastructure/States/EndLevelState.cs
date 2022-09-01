@@ -51,7 +51,7 @@ namespace CodeBase.Infrastructure.States
 
         private void BlockInput()
         {
-            _inputService.isBlocked = true;
+            //_inputService.isBlocked = true;
         }
 
         private void CreateEndLevelWindow(LevelResult levelResult, EndLevelData endLevelData)
@@ -109,7 +109,7 @@ namespace CodeBase.Infrastructure.States
 
         public void Exit()
         {
-            _inputService.isBlocked = false;
+            //_inputService.isBlocked = false;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CodeBase.Helpers.Debug;
 using DG.Tweening;
 using UniRx;
 using UniRx.Triggers;
@@ -14,7 +15,7 @@ public class UISymbolAnimation : MonoBehaviour
     void Start()
     {
         
-        Debug.Log("start UISymbolAnimation");
+        WDebug.Log("Start UISymbolAnimation", WType.UI);
         transform.rotation= Quaternion.Euler(0, 0, -_angle);
         
         var endRot = new Vector3(0, 0, _angle);

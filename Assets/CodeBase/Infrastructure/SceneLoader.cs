@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CodeBase.Helpers.Debug;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +19,7 @@ namespace CodeBase.Infrastructure
         
         private IEnumerator LoadScene(string nextScene, Action onLoaded = null)
         {
-            Debug.Log($"[SceneLoader] Start Load Scene: {nextScene}");
+            WDebug.Log($"[SceneLoader] Start Load Scene: {nextScene}", WType.Infrastructure);
             
             // if (SceneManager.GetActiveScene().name == nextScene)
             // {
