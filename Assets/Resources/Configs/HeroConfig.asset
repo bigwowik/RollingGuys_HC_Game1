@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HeroConfig
   m_EditorClassIdentifier: 
   ForwardSpeed: 4
-  HorizontalSpeed: 2
+  HorizontalSpeed: 3
   Acceleration: 7

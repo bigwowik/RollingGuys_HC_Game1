@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e108b1fdb4e412d9572a5764484fe6c, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  NameKey: 4
+  NameKey: 1
   MapData: '0 0 0 0 0
 
     0 0 0 0 0
@@ -30,7 +30,7 @@ MonoBehaviour:
 
     0 2 0 0 0
 
-    0 0 3 F 0
+    0 0 3 0 0
 
     0 0 0 0 0
 
@@ -45,7 +45,7 @@ MonoBehaviour:
 
     0 1 1 0 0
 
-    0 0 F
+    0 0 0
     0 0
 
     0 1 1 0 0
@@ -56,10 +56,10 @@ MonoBehaviour:
 
     0 2 0 0 0
 
-    0 0 3 0
+    0 0 0 0
     0
 
-    0 0 0 0 0
+    0 0 3 0 0
 
     0 0 0 C 0
 
