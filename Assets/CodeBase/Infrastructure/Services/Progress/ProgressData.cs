@@ -7,11 +7,14 @@ namespace CodeBase.Infrastructure.Services.Progress
     {
         public LevelProgressData LevelProgressData;
         public ResourcesData ResourcesData;
+        public SettingsData SettingsData;
+        
 
         public ProgressData()
         {
             LevelProgressData = new LevelProgressData();
             ResourcesData = new ResourcesData();
+            SettingsData = new SettingsData();
         }
     }
 }

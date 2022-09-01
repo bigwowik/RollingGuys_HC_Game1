@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.Settings;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,16 +19,18 @@ namespace CodeBase.UI.Settings
         
         public Button CloseButton;
         private IMediator _mediator;
+        private ISettingsService _settingsService;
 
         [Inject]
-        public void Construct(IMediator mediator)
+        public void Construct(IMediator mediator, ISettingsService settingsService)
         {
+            _settingsService = settingsService;
             _mediator = mediator;
         }
         
         private void Start()
         {
-            Presenter = new SettingsPresenter(this, _mediator);
+            Presenter = new SettingsPresenter(this, _mediator, _settingsService);
             Presenter.Start();
         }
     }
@@ -50,12 +53,14 @@ namespace CodeBase.UI.Settings
     {
         private SettingsView _settingsView;
         private readonly IMediator _mediator;
+        private readonly ISettingsService _settingsService;
         private SettingsModel _settingsModel;
 
-        public SettingsPresenter(SettingsView settingsView, IMediator mediator)
+        public SettingsPresenter(SettingsView settingsView, IMediator mediator, ISettingsService settingsService)
         {
             _settingsView = settingsView;
             _mediator = mediator;
+            _settingsService = settingsService;
 
             _settingsModel = new SettingsModel(true, true);
         }
@@ -72,13 +77,13 @@ namespace CodeBase.UI.Settings
             _settingsModel
                 .IsSoundsEnable
                 .ObserveEveryValueChanged(z => z.Value)
-                .Subscribe(SetSoundsSettings)
+                .Subscribe(_settingsService.SetSoundsEnable)
                 .AddTo(_settingsView);
 
             _settingsModel
                 .IsVibroEnable
                 .ObserveEveryValueChanged(z => z.Value)
-                .Subscribe(SetVibroSettings)
+                .Subscribe(_settingsService.SetVibroEnable)
                 .AddTo(_settingsView);
         }
 
@@ -114,18 +119,6 @@ namespace CodeBase.UI.Settings
             
             
         }
-
-        private void SetSoundsSettings(bool value)
-        {
-            WDebug.Log($"Set sounds to {value}.", WType.UI);
-        }
-
-        private void SetVibroSettings(bool value)
-        {
-            WDebug.Log($"Set vibro to {value}.", WType.UI);
-
-        }
-
         private void Info()
         {
             WDebug.Log("Show Info.", WType.UI);

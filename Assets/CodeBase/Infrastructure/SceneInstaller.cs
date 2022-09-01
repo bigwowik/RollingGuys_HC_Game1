@@ -3,6 +3,7 @@ using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Inputs;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Infrastructure.Services.Randomness;
+using CodeBase.Infrastructure.Services.Settings;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic.Map;
 using CodeBase.StaticData;
@@ -22,6 +23,7 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         //others
         BindInputService();
         BindRandomService();
+        BindSettingsService();
         //progress
         BindProgressService();
         BindLevelGameProgress();
@@ -34,6 +36,14 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         BindConfigsService();
         BindMapProvider();
 
+    }
+
+    private void BindSettingsService()
+    {
+        Container
+            .Bind<ISettingsService>()
+            .To<SettingsService>()
+            .AsSingle();
     }
 
     private void BindRewardService()
