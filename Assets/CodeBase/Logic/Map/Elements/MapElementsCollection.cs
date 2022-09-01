@@ -22,7 +22,7 @@ namespace CodeBase.Logic.Map
                 return element.Prefab;
             else
             {
-                WDebug.Log($"Map element with key: {elementKey} has not found", WType.Logic);
+                //WDebug.Log($"Map element with key: {elementKey} has not found", WType.Logic);
                 return null;
             }
         }

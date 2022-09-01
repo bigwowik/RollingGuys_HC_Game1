@@ -2,6 +2,7 @@
 using CodeBase.Helpers.Debug;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Inputs;
+using CodeBase.Infrastructure.Services.Ads;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Logic.Player;
 using CodeBase.UI.Factory;
@@ -20,6 +21,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IInputService _inputService;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IRewardService _rewardService;
+        private readonly IAdsService _adsService;
 
         private EndLevelWindowPresenter _endLevelWindow;
 
@@ -28,7 +30,8 @@ namespace CodeBase.Infrastructure.States
             IProgressService progressService, 
             IInputService inputService,
             ILevelProgressService levelProgressService,
-            IRewardService rewardService)
+            IRewardService rewardService,
+            IAdsService adsService)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
@@ -36,6 +39,7 @@ namespace CodeBase.Infrastructure.States
             _inputService = inputService;
             _levelProgressService = levelProgressService;
             _rewardService = rewardService;
+            _adsService = adsService;
         }
 
         public void Enter(LevelResult levelResult)
@@ -74,6 +78,8 @@ namespace CodeBase.Infrastructure.States
 
         private void ReloadGame()
         {
+            //_adsService.ShowAd();
+            
             WDebug.Log(WType.Infrastructure, "Reload scene");
             
             _endLevelWindow.Closed -= ReloadGame;

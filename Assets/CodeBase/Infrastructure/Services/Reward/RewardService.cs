@@ -1,14 +1,17 @@
-﻿using CodeBase.Infrastructure.Services.Progress;
+﻿using CodeBase.Infrastructure.Services.Ads;
+using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.UI.Windows.EndLevelWindow;
 
 namespace CodeBase.Infrastructure.States
 {
     public class RewardService : IRewardService
     {
-        public const float AdsRewardValue = 3f;
+        public const float AdsWinRewardValue = 3f;
+        public const float AdsFailRewardValue = 2f;
         
         private readonly IProgressService _progressService;
         private readonly IMediator _mediator;
+        private readonly IAdsRewardedService _adsRewardedService;
         private readonly RewardService _rewardService;
 
         public RewardService(IProgressService progressService, IMediator mediator)
@@ -26,7 +29,9 @@ namespace CodeBase.Infrastructure.States
 
         public void GiveAdsReward(EndLevelData endLevelData)
         {
-            var coinsToAdd = (int) (endLevelData.CollectedCoins * AdsRewardValue);
+            var rewardValue = endLevelData.Result == LevelResult.WIN ? AdsWinRewardValue : AdsFailRewardValue;
+            
+            var coinsToAdd = (int) (endLevelData.CollectedCoins * rewardValue);
             AddCoins(coinsToAdd);
         }
 

@@ -1,6 +1,7 @@
 using CodeBase.Infrastructure;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Inputs;
+using CodeBase.Infrastructure.Services.Ads;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.Infrastructure.Services.Randomness;
 using CodeBase.Infrastructure.Services.Settings;
@@ -35,7 +36,33 @@ public class SceneInstaller : MonoInstaller, ICoroutineRunner
         //configs
         BindConfigsService();
         BindMapProvider();
+        //ads
+        BindAdsInitializer();
+        BindAdsServices();
+        
 
+    }
+
+    private void BindAdsInitializer()
+    {
+        Container
+            .Bind<IAdsInitializer>()
+            .To<AdsInitializer>()
+            .AsSingle()
+            .NonLazy();
+    }
+
+    private void BindAdsServices()
+    {
+        Container
+            .Bind<IAdsService>()
+            .To<AdsService>()
+            .AsSingle();
+        
+        Container
+            .Bind<IAdsRewardedService>()
+            .To<AdsRewardedService>()
+            .AsSingle();
     }
 
     private void BindSettingsService()

@@ -15,7 +15,7 @@ namespace CodeBase.Infrastructure
         private void Awake()
         {
             _game.GameStateMachine.Enter<BootstrapState>();
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
 
 #if UNITY_EDITOR
             //PlayerPrefs.DeleteAll();

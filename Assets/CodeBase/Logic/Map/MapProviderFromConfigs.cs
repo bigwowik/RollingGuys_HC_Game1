@@ -25,8 +25,8 @@ namespace CodeBase.Logic.Map
             var currentMap = _mapConfigs.Find(z => z.NameKey == currentLevel);
             if (currentMap == null)
             {
-                WDebug.Log($"Cant found level with name {currentLevel}", WType.Logic);
-                return null;
+                WDebug.Log($"Cant found level with name {currentLevel}. Loading 0 level.", WType.Logic);
+                currentMap = _configsService.MapsConfigs[0];
             }
             
             

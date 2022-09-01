@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Services.Ads;
 using CodeBase.Infrastructure.Services.Progress;
 using CodeBase.UI.Factory;
 using DG.Tweening;
@@ -13,15 +14,28 @@ namespace CodeBase.Infrastructure.States
         private readonly IProgressService _progressService;
         private readonly IUIFactory _uiFactory;
         private readonly IMediator _mediator;
+        private readonly IAdsService _adsService;
 
-        public LoadDataState(IGameStateMachine gameStateMachine, IProgressService progressService, IGameFactory gameFactory, IUIFactory uiFactory, IMediator mediator)
+        private readonly IAdsInitializer _adsInitializer;
+
+        public LoadDataState(
+            IGameStateMachine gameStateMachine, 
+            IProgressService progressService, 
+            IGameFactory gameFactory, 
+            IUIFactory uiFactory, 
+            IMediator mediator,
+            IAdsInitializer adsInitializer,
+            IAdsService adsService)
         {
             _gameStateMachine = gameStateMachine;
             _gameFactory = gameFactory;
             _progressService = progressService;
             _uiFactory = uiFactory;
             _mediator = mediator;
+            _adsInitializer = adsInitializer;
+            _adsService = adsService;
         }
+
         public void Enter()
         {
             //load data
@@ -31,7 +45,9 @@ namespace CodeBase.Infrastructure.States
             var data = _progressService.LoadData();
             _mediator.SetCoinsText(data.ResourcesData.Coins.ToString());
             
-            
+            //init ads
+            InitAds();
+
             PrepareFactory();
             
             InitMap();
@@ -40,6 +56,12 @@ namespace CodeBase.Infrastructure.States
             
             
             _gameStateMachine.Enter<MainMenuState>();
+        }
+
+        private void InitAds()
+        {
+            _adsInitializer.InitializeAds();
+            //_adsService.Init();
         }
 
         private void PrepareFactory()
