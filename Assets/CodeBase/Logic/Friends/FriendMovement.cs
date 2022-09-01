@@ -19,6 +19,7 @@ namespace CodeBase.Logic.Friends
         
         //variables
         private Vector3 _nextPosition;
+        private bool Moving { get; set; }
 
         [Inject]
         public void Construct(IInputService inputService, FriendConfig friendConfig)
@@ -33,9 +34,14 @@ namespace CodeBase.Logic.Friends
             _rigidbody = GetComponent<Rigidbody>();
         }
 
+        private void Update()
+        {
+            Moving = _inputService.isActive;
+        }
+
         private void FixedUpdate()
         {
-            if(!_inputService.isActive) return;
+            if(!Moving) return;
             
             TrySetStartNextPosition();//once
             

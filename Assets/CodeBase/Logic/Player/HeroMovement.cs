@@ -16,8 +16,10 @@ namespace CodeBase.Logic.Player
         //components
         private Rigidbody _rigidbody;
 
-        private float _speed;
+        private bool IsMoving;
         private float _lerpMaxSpeed;
+
+        private bool skipOneFrame;
         
         [Inject]
         public void Construct(IInputService inputService, HeroConfig heroConfig)
@@ -29,19 +31,43 @@ namespace CodeBase.Logic.Player
         private void Awake() => 
             _rigidbody = GetComponent<Rigidbody>();
 
-        private void FixedUpdate()
-        { 
-            _lerpMaxSpeed = _inputService.isActive ? 1f : 0f;
-            _speed = Mathf.Lerp(_speed, _lerpMaxSpeed, _heroConfig.Acceleration * Time.fixedDeltaTime);
-            Move(_speed);
+        private void Update()
+        {
+            if (_inputService.isActive)
+            {
+                if (TrySkipOneFrame()) return;
+
+                IsMoving = true;
+            }
+            //_speed = Mathf.Lerp(_speed, 1, _heroConfig.Acceleration * Time.deltaTime);
+            else
+            {
+                IsMoving = false;
+            }
         }
 
-        private void Move(float lerpSpeed)
+        private bool TrySkipOneFrame()
+        {
+            if (!skipOneFrame)
+            {
+                skipOneFrame = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void FixedUpdate()
+        {
+            if(!IsMoving) return;
+            Move();
+        }
+
+        private void Move()
         {
             _rigidbody.MovePosition(_rigidbody.position + 
                                     (Vector3.forward * _heroConfig.ForwardSpeed + 
-                                     Vector3.right * _inputService.VelocityX * _heroConfig.HorizontalSpeed) 
-                                    * lerpSpeed 
+                                     Vector3.right * _inputService.VelocityX * _heroConfig.HorizontalSpeed)
                                     * Time.fixedDeltaTime);
         }
     }

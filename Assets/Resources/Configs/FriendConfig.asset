@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f22c2653e5841cebd4a2c5c0503b657, type: 3}
   m_Name: FriendConfig
   m_EditorClassIdentifier: 
-  CriticalDistance: 0.5
-  Speed: 6
+  CriticalDistance: 0.75
+  Speed: 5
