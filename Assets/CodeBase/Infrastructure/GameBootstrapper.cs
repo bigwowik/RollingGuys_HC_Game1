@@ -18,10 +18,6 @@ namespace CodeBase.Infrastructure
             _game.GameStateMachine.Enter<BootstrapState>();
             //DontDestroyOnLoad(this);
 
-#if UNITY_EDITOR
-            //PlayerPrefs.DeleteAll();
-#endif
-
         }
     }
 }
