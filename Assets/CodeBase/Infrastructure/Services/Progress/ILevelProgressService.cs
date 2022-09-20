@@ -15,5 +15,6 @@ namespace CodeBase.Infrastructure.Factory
         int GetAndResetCollectedCoins();
         event Action OnLevelStarted;
         void StartLevel();
+        event Action OnLevelWin;
     }
 }

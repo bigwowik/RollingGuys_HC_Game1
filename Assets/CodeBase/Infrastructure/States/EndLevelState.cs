@@ -8,6 +8,7 @@ using CodeBase.Logic.Player;
 using CodeBase.UI.Factory;
 using CodeBase.UI.Hud;
 using CodeBase.UI.Windows.EndLevelWindow;
+using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,9 @@ namespace CodeBase.Infrastructure.States
 {
     public class EndLevelState : IPayloadState<LevelResult>
     {
+        private const float DelayWinLevelWindow = 3.5f;
+        private const float DelayFailLevelWindow = 2f;
+        
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IUIFactory _uiFactory;
         private readonly IProgressService _progressService;
@@ -22,6 +26,7 @@ namespace CodeBase.Infrastructure.States
         private readonly ILevelProgressService _levelProgressService;
         private readonly IRewardService _rewardService;
         private readonly IAdsService _adsService;
+        private readonly IGameFactory _gameFactory;
 
         private EndLevelWindowPresenter _endLevelWindow;
 
@@ -31,7 +36,8 @@ namespace CodeBase.Infrastructure.States
             IInputService inputService,
             ILevelProgressService levelProgressService,
             IRewardService rewardService,
-            IAdsService adsService)
+            IAdsService adsService, 
+            IGameFactory gameFactory)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
@@ -40,22 +46,27 @@ namespace CodeBase.Infrastructure.States
             _levelProgressService = levelProgressService;
             _rewardService = rewardService;
             _adsService = adsService;
+            _gameFactory = gameFactory;
         }
 
         public void Enter(LevelResult levelResult)
         {
-            BlockInput();
+            CreateWinCamera();
             
             var endLevelData = CreateEndLevelData(levelResult);
-            
-            CreateEndLevelWindow(levelResult, endLevelData);
-            ProgressUpdate(endLevelData);
 
+            ProgressUpdate(endLevelData);
+            
+            var delayFailLevelWindow = levelResult == LevelResult.WIN ? DelayWinLevelWindow : DelayFailLevelWindow;
+            Observable.Timer(TimeSpan.FromSeconds(delayFailLevelWindow))
+                .Subscribe(_ =>
+                    CreateEndLevelWindow(levelResult, endLevelData));
+            //CreateEndLevelWindow(levelResult, endLevelData);
         }
 
-        private void BlockInput()
+        private void CreateWinCamera()
         {
-            //_inputService.isBlocked = true;
+            _gameFactory.CreatePlayerWinCamera();
         }
 
         private void CreateEndLevelWindow(LevelResult levelResult, EndLevelData endLevelData)

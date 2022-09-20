@@ -12,6 +12,7 @@
         public const string AudioMixerPath = "AudioMixers/AudioMixer";
         public const string MapCreatorPath = "Prefabs/Map/MapCreator 1";
         public const string PlayerCameraPath = "Prefabs/Player/PlayerCamera 1";
+        public const string PlayerWinCameraPath = "Prefabs/Player/PlayerWinCamera";
 
     }
 }

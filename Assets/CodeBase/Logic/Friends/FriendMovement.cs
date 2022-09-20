@@ -49,8 +49,13 @@ namespace CodeBase.Logic.Friends
             MovePositionToLerpNext();
         }
 
-        private void MovePositionToLerpNext() => 
-            _rigidbody.position = Vector3.Lerp(_rigidbody.position, _nextPosition, _friendConfig.Speed * Time.fixedDeltaTime);
+        public void MovePositionToLerpNext()
+        {
+            var newPos =
+                Vector3.Lerp(_rigidbody.position, _nextPosition, _friendConfig.Speed * Time.fixedDeltaTime );
+             
+            _rigidbody.MovePosition(newPos);
+        }
 
         private void TryUpdateNextPosition()
         {

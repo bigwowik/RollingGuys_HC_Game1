@@ -16,6 +16,7 @@ namespace CodeBase.Infrastructure.Services.Progress
         private int _collectedCoins;
 
         public event Action OnLevelStarted;
+        public event Action OnLevelWin;
 
         public void StartLevel()
         {
@@ -32,7 +33,7 @@ namespace CodeBase.Infrastructure.Services.Progress
         public void EndLevelTriggerAction(LevelResult levelResult)
         {
             _gameStateMachine.Enter<EndLevelState, LevelResult>(levelResult);
-            
+            OnLevelWin?.Invoke();
         }
 
         public void AddCoin(int coinCount)

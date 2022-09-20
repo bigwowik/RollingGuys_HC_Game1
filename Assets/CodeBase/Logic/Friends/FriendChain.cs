@@ -1,6 +1,8 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic.Player;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -8,12 +10,13 @@ namespace CodeBase.Logic.Friends
 {
     public class FriendChain : MonoBehaviour
     {
-        private CinemachineVirtualCamera _camera;
         private IGameFactory _gameFactory;
         private ILevelProgressService _levelProgressService;
         public Vector3 Position => transform.position;
         public FriendChain Next { get; set; }
         public FriendChain Previous { get; set; }
+
+        public Action OnDeath;
 
         [Inject]
         public void Construct(ILevelProgressService levelProgressService)
@@ -41,8 +44,8 @@ namespace CodeBase.Logic.Friends
                 RemoveFirstElement();
             else
                 RemoveNotFirstElement();
-            
-            Destroy(gameObject);
+
+            Death();
         }
 
         private void RemoveNotFirstElement()
@@ -64,8 +67,14 @@ namespace CodeBase.Logic.Friends
             }
         }
 
-        private void Fail() => 
+        private void Fail()
+        {
+            // Observable.Timer(TimeSpan.FromSeconds(1.5f))
+            //     .Subscribe(_ => _levelProgressService.ReloadLevelWithFail())
+            //     .AddTo(this);
+            
             _levelProgressService.ReloadLevelWithFail();
+        }
 
         private void ChangeActivePlayer(GameObject prev)
         {
@@ -76,5 +85,17 @@ namespace CodeBase.Logic.Friends
             _levelProgressService.PlayerCamera.Follow = prev.transform;
         }
 
+        private void Death()
+        {
+            GetComponent<HeroMovement>().enabled = false;
+            
+            if(GetComponent<FriendMovement>() != null)
+                GetComponent<FriendMovement>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+            
+            OnDeath?.Invoke();
+            
+            //Destroy(gameObject);
+        }
     }
 }

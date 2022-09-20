@@ -67,6 +67,17 @@ namespace CodeBase.Infrastructure.Factory
             _levelProgressService.PlayerCamera = camera;
             return instance;
         }
+        
+        public GameObject CreatePlayerWinCamera()
+        {
+            var prefab = Resources.Load<GameObject>(AssetPaths.PlayerWinCameraPath);
+            var instance = _diContainer.InstantiatePrefab(prefab);
+            var camera = instance.GetComponentInChildren<CinemachineVirtualCamera>();
+            camera.Follow = PlayerGameObject.transform;
+
+            _levelProgressService.PlayerCamera = camera;
+            return instance;
+        }
 
         #endregion
 

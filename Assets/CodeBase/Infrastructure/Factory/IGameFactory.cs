@@ -19,5 +19,6 @@ namespace CodeBase.Infrastructure.Factory
         GameObject InstantiateThroughDi(GameObject prefab, Vector3 at);
         GameObject CreateFriend(GameObject prefab, Vector3 at);
         void PrepareFactory();
+        GameObject CreatePlayerWinCamera();
     }
 }
